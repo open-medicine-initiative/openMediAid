@@ -1,6 +1,8 @@
 Medium - Social Healthshare
 ======
 
+This is the home of Medium, an exciting open source project for medical services. Read this introduction and then continue to browse the [Wiki](https://github.com/bennidi/medium/wiki). Leave feed back in the projects [issue](https://github.com/bennidi/medium/issues) list if you like and get involved.
+
 
 # What is Medium
 Medium combines various ideas from social web software to form a new type of medical information system that is free of charge, open source and entirely community driven. It is an online platform where people with health problems can manage their personal medical record and share it with others in a social network like environment to learn about the options other people have explored. The consistent documentation of medical stories also enables one of Medium's core features: A recommender system that can guide people in their search for useful information on potential causes of their symptoms as well as effective therapy for their condition by systematically comparing their medical story with those of others. This system relies on the simple observation that what has worked for some, may very well work for others who are in some ways similar, what has explained the condition of one, may explain the condition of another.
