@@ -1,0 +1,22 @@
+# IDE files project settings #
+*.iml
+*.ipr
+*.iws
+**/.idea/*
+**/.idea
+
+**/.classpath
+**/.project
+**/.settings/org.eclipse.core.resources.prefs
+**/.settings/org.eclipse.jdt.core.prefs
+**/.settings/org.eclipse.m2e.core.prefs
+
+# personal #
+todos.txt
+
+# generated artefacts #
+code/build/jsdoc
+code/build/dist
+
+# node.js modules #
+code/node_modules

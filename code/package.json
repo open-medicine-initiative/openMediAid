@@ -1,0 +1,28 @@
+{
+  "name": "medium",
+  "description": "Main package of medium medical platform",
+  "author": "Benjamin Diedrichsen <b.diedrichsen@gmail.com>",
+  "dependencies": {
+    "taffydb": ">=2.7.2",
+    "knockout": ">=3.1.0",
+    "jquery": ">=2.1.1"
+  },
+  "devDependencies": {
+    "mocha": "~1.20.0",
+    "yargs": "~1.2.2",
+    "gulp": "~3.6.2",
+    "gulp-concat": "~2.2.0",
+    "gulp-rename": "~1.2.0",
+    "gulp-uglify": "~0.3.0",
+    "gulp-jshint": "~1.6.1",
+    "jshint-stylish": "~0.2.0",
+    "gulp-jsonminify": "~0.0.1",
+    "gulp-clean": "~0.3.0",
+    "gulp-jsdoc": "~0.1.4",
+    "gulp-mocha": "~0.4.1",
+    "gulp-browserify": "~0.5.0",
+    "gulp-util": "~2.2.14",
+    "gulp-if": "~1.2.1"
+  },
+  "engine": "node >= 0.10.25"
+}
