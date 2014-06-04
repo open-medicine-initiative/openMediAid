@@ -1,5 +1,5 @@
 // use taffy db for internal representation of catalogue data
-var db = require("../lib/taffy");
+var db = require("../../lib/taffy");
 
 /**
  * The catalogue module exposes objects that wrap the raw catalogue data to provide
@@ -31,14 +31,16 @@ function Symptoms(data){
      * @returns {*}
      */
      this.find = function (criteria){
-        var sids = _tags(criteria);
-        var joined = sids.join(_symptoms, function(left, right){
-
+        var matching = _tags(criteria); // filter tags by given criteria
+        var joined = matching.join(_symptoms, function(left, right){
             return left.symptoms.indexOf(right.sid) != -1;
         });
-        var result = joined.select("sid", "cName");
+        //var result = joined.select("sid", "cName");
+         var result = joined.map(function (record,recordnumber) {
+             return {sid: record.sid , cName : record.cName};
+         });
         return result;
-    }
+    };
 
     // this is the publicly exposed object
     return {
@@ -46,6 +48,6 @@ function Symptoms(data){
     };
 }
 
-
 // export such that require(file).catalogue works
 module.exports = Catalogues;
+

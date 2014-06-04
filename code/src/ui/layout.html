@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/w2ui-1.3.2.css" />
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="lib/w2ui-1.3.2.js"></script>
+    <script type="text/javascript" src ="lib/knockout-3.1.0.js" ></script>
+</head>
+<body>
+<div id="layout" style="height: 400px"></div>
+</body>
+
+
+<script type="text/html" id="person-template">
+    <span data-bind="text: label" style="float:left;margin-right:10px"></span>:
+    <span data-bind="text: score"></span><br/>
+</script>
+
+<script type="text/html" id="combobox">
+<form>
+    Search:
+    <input data-bind='value:search' />
+</form>
+    <div id="scores" data-bind="template: { name: 'person-template', foreach: hits }" style="visibility:hidden"></div>
+</script>
+
+
+<script>
+    $('#layout').w2layout({
+        name: 'layout',
+        panels: [
+            { type: 'left', size: 200, resizable: true, style: 'background-color: #F5F6F7;', content: 'left' },
+            { type: 'main', style: 'background-color: #F5F6F7; padding: 5px;' }
+        ]
+    });
+
+    w2ui['layout'].content('left', '<div id="hits" data-bind="template: { name: \'person-template\', foreach: hits }"></div>');
+    w2ui['layout'].content('main', '<div id="combo" data-bind="template: { name: \'combobox\', data: data }"></div>');
+
+
+    var data = function(){
+        this.search = ko.observable("se"),
+        this.hits = [{label:ko.observable("hit1"), score:ko.observable(10) },
+            {label:ko.observable("hit2"), score:ko.observable(23) }],
+        this.filtered = ko.computed(function() {
+            if($('#scores').css("visibility") == "hidden"){
+                $('#scores').css("visibility", "visible");
+            }
+            alert("filtering for: " + this.search());
+            return this.hits;
+        }, this);
+        return this;
+    };
+
+    ko.applyBindings(new data(), document.getElementById("hits"));
+    ko.applyBindings({data:new data()}, document.getElementById("combo"));
+</script>
+</html>

@@ -17,6 +17,7 @@ todos.txt
 # generated artefacts #
 code/build/jsdoc
 code/build/dist
+code/build/reports
 
 # node.js modules #
 code/node_modules

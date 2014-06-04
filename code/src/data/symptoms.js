@@ -1,5 +1,5 @@
 
-symptoms = {
+var symptoms = {
     /*
     * Tags are used to refer to associate symptoms into meaningful medical categories, such as
     * body regions.

@@ -20,9 +20,14 @@
     "gulp-clean": "~0.3.0",
     "gulp-jsdoc": "~0.1.4",
     "gulp-mocha": "~0.4.1",
-    "gulp-browserify": "~0.5.0",
     "gulp-util": "~2.2.14",
-    "gulp-if": "~1.2.1"
+    "gulp-if": "~1.2.1",
+    "blanket": "~1.1.6",
+    "gulp-blanket-mocha": "0.0.4",
+    "knockout": "~3.1.0",
+    "browserify": "~4.1.8",
+    "vinyl-source-stream": "~0.1.1",
+    "mkdirp": "~0.5.0"
   },
   "engine": "node >= 0.10.25"
 }
