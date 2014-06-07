@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/w2ui-1.3.2.css" />
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="lib/w2ui-1.3.2.js"></script>
+    <script type="text/javascript" src ="lib/knockout-3.1.0.js" ></script>
+    <script type="text/javascript" src ="lib/handlebars-v1.3.0.js" ></script>
+    <script type="text/javascript" src ="lib/jsonselect.js" ></script>
+
+</head>
+<body>
+<div id="searchbox">
+    <div id="left" style="height:100px;border:1px solid black;float:left"></div>
+    <div id="right" style="width:100px; height:100px;border: 1px solid black;float:left"></div>
+</div>
+
+
+<script type="text/html" id="match">
+        <span data-bind="text: sid" style="float:left;margin-right:10px"></span>:
+        <span data-bind="text: cName"></span><br/>
+</script>
+
+
+<script type="text/javascript">
+
+
+    var formmodel = {
+        types : {
+            "string": {template: "<input type='text' value='{{node.value}}'>"},
+            "string:required": { template: "<input type='text' class='required' />"},
+            "array": { template: "<div id='{{node.id}}'></div>"},
+            "phone": { template: "<div>{{node.value.type}}:{{node.value.number}}</div>"}
+            },
+
+        fields:[
+            {
+                jsid: "http://jsonschema.net/address/city",
+                id:"person.address.city", //@generated
+                target: "#left",
+                "type":"string",
+                "required":false,
+                path: ".address .city"  //@generated
+            },
+            {
+                jsid: "http://jsonschema.net/phones",
+                id:"phones",
+                target: "#right",
+                "type":"array",
+                "required":false,
+                path: ".phones"
+            },
+            {
+                jsid: "http://jsonschema.net/phone",
+                id:"person.phones[*]",
+                target: "#phones",
+                "type":"phone",
+                "required":false,
+                path: ".phones",
+                multiple: true
+            }
+        ]
+    }
+
+    var data = {
+        address:{
+            city: "left city"
+        },
+        phones:[
+            {type: "home", number: 100129},
+            {type: "home", number: 100129}
+        ]
+
+    }
+
+    function render(){
+        for(var i=0; i < formmodel.fields.length; i++){
+            renderField(formmodel.fields[i]);
+        }
+    }
+
+    function renderField(field){
+
+
+            var template = Handlebars.compile(formmodel.types[field.type].template);
+            if(field.multiple){
+                var vals = JSONSelect.match(field.path, data)[0];
+                for(var i=0; i < vals.length; i++){
+                    var generated = template({node:{value:vals[i],id:field.id}});
+                    $(field.target)
+                            .append(generated);
+                }
+
+            }else{
+                var value = JSONSelect.match(field.path, data)[0];
+                var generated = template({node:{value:value,id:field.id}});
+                $(field.target)
+                        .append(generated);
+            }
+
+    }
+
+    render();
+
+</script>
+
+</body>
+</html>

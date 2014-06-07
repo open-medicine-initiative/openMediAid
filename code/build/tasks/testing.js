@@ -15,7 +15,8 @@ gulp.task('test:browserify', function () {
 function createBrowserifiedTests() {
     browserify([
         opts.test + "common.catalogues.js",
-        opts.test + "common.utils.js"
+        opts.test + "common.utils.js",
+        opts.test + "ui.jsonform.js"
     ])
         .bundle()
         // transform the stream to be gulp compatible
