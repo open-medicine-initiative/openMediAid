@@ -21,13 +21,13 @@ function ValueRef(root, path){
         get: function (){
            return root[property];
         }
-    }
+    };
 }
 
 function value(path){
     return {from: function(source){
         return ValueRef(source, path);
-    }}
+    }};
 }
 
 /**

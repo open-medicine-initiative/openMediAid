@@ -1,25 +1,41 @@
 var opts = require('./settings');
 var gulp = require('gulp');
 var yargs = require('yargs');
-var mocha = require('gulp-mocha');
+var _mocha = require('gulp-mocha');
+var mocha = function(params){
+    return _mocha(params).on("error", function (error) {
+        error.showstack = true; // make mocha print stack traces for errors coming from application code
+        throw error;
+    })
+};
 var blanket = require('gulp-blanket-mocha');
 var browserify = require('browserify');
 var source = require("vinyl-source-stream");
+var Finder = require("fs-finder");
+
+var Tests = {
+    all: Finder.in(opts.test).findFiles('test.*.js'),
+    perf: Finder.in(opts.test).findFiles('perf.*.js')
+};
 
 // take all mocha tests in 'test' folder and use browserify to
 // make them available in a browser using the 'alltests.html"
 gulp.task('test:browserify', function () {
-    createBrowserifiedTests();
+    createBrowserifiedTests(determineTestSet(getYargs()));
 });
 
-function createBrowserifiedTests() {
-    browserify([
-        opts.test + "test.common.catalogues.js",
-        opts.test + "test.common.utils.js",
-        opts.test + "test.dsm.tobservablestate.js",
-        opts.test + "test.dsm.tobservablesymptom.js",
-        opts.test + "test.dsm.js"
-    ])
+function determineTestSet(yargs) {
+    var sets = yargs.argv.tests.split(',');
+    var selected = [];
+    for (var i = 0; i < sets.length; i++) {
+        if (!Tests[sets[i]])throw new Error("Unknown test set:" + sets[i]);
+        selected = selected.concat(Tests[sets[i]]);
+    }
+    return selected;
+}
+
+function createBrowserifiedTests(files) {
+    browserify(files)
         .bundle()
         // transform the stream to be gulp compatible
         .pipe(source('alltests.js'))
@@ -27,31 +43,30 @@ function createBrowserifiedTests() {
 }
 
 function getYargs() {
-    return yargs.usage('Run the mocha unit tests in "test" folder.\nUsage: $0 $1')
+    var args = yargs
+        .usage('Run the mocha unit tests in "test" folder.\nUsage: $0 $1')
         .example('$0 $1 -b', 'Run the test and generate in-browser tests')
         .options('b', {
-            alias: 'browser',
+            alias: 'browserify',
             default: false
+        })
+        .options('s', {
+            alias: 'tests',
+            default: 'all'
         })
         .describe('b', 'Set this option if you want to generate in-browser tests using browserify');
     //args.showHelp();
+    return args;
 }
 
 gulp.task('test', function () {
-    // get CLI args
-    var args = getYargs();
+    var yargs = getYargs();
 
-    if (args.argv.b) {
-        createBrowserifiedTests();
+    if (yargs.argv.b) {
+        createBrowserifiedTests(determineTestSet(yargs));
     }
-    else {
-        return  gulp.src(opts.test + '*.js')
-            .pipe(mocha({ reporter: 'list' })
-                 .on("error", function(error){
-                    error.showstack = true; // make mocha print stack traces for errors coming from application code
-                    throw error;
-            }));
-    }
+    return  gulp.src(determineTestSet(yargs))
+        .pipe(mocha({ reporter: 'list' }));
 });
 
 /**
@@ -59,15 +74,10 @@ gulp.task('test', function () {
  * modules.
  */
 gulp.task('test:coverage', function () {
-    gulp.src([opts.test + "*.js"], {read: false})
-        .pipe(mocha({
-            reporter: 'list'
-        }))
+    gulp.src(determineTestSet(), {read: false})
+        .pipe(mocha({reporter: 'list'}))
         .pipe(blanket({
-            // Blanket needs to be told explicitly which files to instrument for test coverage analysis
-            instrument: [
-               "src/modules/common/catalogues.js",
-               "src/modules/common/utils.js"],
+            instrument: Finder.Finder.in(opts.modules).findFiles('*.js'),
             // where to render the reporter output
             captureFile: 'build/reports/test-coverage.html',
             // the report format
