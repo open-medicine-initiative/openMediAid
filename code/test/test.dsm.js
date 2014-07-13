@@ -33,6 +33,7 @@ describe('Compositions', function(){
                 expect(dsm.unit).to.be('relative');
                 dsm.unit = "invalid unit";
                 expect(dsm.hasErrors()).to.be(true);
+                expect(dsm.getError("unit")).to.be("unknown scale");
             });
         })
     })

@@ -16,6 +16,9 @@ function TErrorCollector(){
         addError: function (id, message){
             errors[id] = message;
         },
+        clearError: function (id){
+            delete errors[id];
+        },
         getError: function(id){
             return errors[id];
         },

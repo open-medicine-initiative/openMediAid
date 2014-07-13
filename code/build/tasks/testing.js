@@ -17,7 +17,8 @@ function createBrowserifiedTests() {
         opts.test + "test.common.catalogues.js",
         opts.test + "test.common.utils.js",
         opts.test + "test.dsm.tobservablestate.js",
-        opts.test + "test.dsm.tobservablesymptom.js"
+        opts.test + "test.dsm.tobservablesymptom.js",
+        opts.test + "test.dsm.js"
     ])
         .bundle()
         // transform the stream to be gulp compatible

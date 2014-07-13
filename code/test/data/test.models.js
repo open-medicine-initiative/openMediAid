@@ -1,4 +1,5 @@
-module.exports = {symptoms: {
+module.exports = {
+    symptoms: {
     sid: 32133,
     cName: 'Abdominal Pain',
     desc: "Pain in the area of the abdomen",
@@ -17,12 +18,7 @@ module.exports = {symptoms: {
             path: "scale.unit",
             type: "string",
             editable: true,
-            validator: {
-                bind:function (collector, observable, name) {
-                observable.subscribe(function (value) {
-                    if (value !== "relative" && value !== "absolute") collector.addError(name, "unknown scale");
-                    else collector.clearError(name);
-                })
-            }}
+            validations: [{isValid:function(value){return value == "relative" || value == "absolute"}, msg: "unknown scale"}]
         }
-    }}
+    }
+}

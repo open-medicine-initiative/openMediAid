@@ -10972,12 +10972,13 @@ function ValueRef(root, path){
     for(var i = 0; i < path.length - 1 ; i++){
         root = root[path[i]];  //TODO: handle undefined
     }
+    var property = path[path.length -1];
     return {
         set: function (value){
-            root[path.length -1] = value;
+            root[property] = value;
         },
         get: function (){
-           return root[path.length -1];
+           return root[property];
         }
     }
 }
@@ -11024,6 +11025,47 @@ var utils = {
 // export such that require(file).catalogue works
 module.exports = utils;
 },{}],16:[function(require,module,exports){
+var DSM = require('./dsm');
+var Trait = DSM.TraitJS;
+//var ko = require('../../lib/ko.observable.dictionary.js');  // load plugin
+
+/**
+ *
+ * @param colllector
+ * @constructor
+ */
+function TErrorCollector(){
+    var errors = {};
+    var ErrorCollector = Trait({
+        hasErrors: function(){
+           return Object.keys(errors).length > 0;
+        },
+        addError: function (id, message){
+            errors[id] = message;
+        },
+        clearError: function (id){
+            delete errors[id];
+        },
+        getError: function(id){
+            return errors[id];
+        },
+        get errors (){
+          return errors;
+        },
+        logErrors: function (){
+            for(var error in errors){
+                console.log(error + errors[error]);
+            }
+        }
+    });
+    ErrorCollector.initialize = function(){
+    };
+    return DSM.traitify(ErrorCollector);
+}
+
+
+module.exports = TErrorCollector;
+},{"./dsm":20}],17:[function(require,module,exports){
 var Utils = require('../common/utils.js');
 var ko = require('knockout');
 var DSM = require('./dsm');
@@ -11091,19 +11133,26 @@ function TObservableState(options){
  * @returns An object containing the property and meta data for all mapped json properties
  */
 var parseState = function(json, schema){
+    var oState = {};
     var pdescriptors = {};
     var observables = {};
     for(var property in schema){
         pdescriptors[property] = {
             name:property,
-            validator: schema[property].validator,
+            validations: schema[property].validations,
             editable:schema[property].editable,
             path: schema[property].path,
-            jsonbinding: Utils.orb.value(schema[property].path).from(json) // value references to set values on the provided json
+            jsonbinding: Utils.orb.value(schema[property].path).from(json), // value references to set values on the provided json
+            onUpdate: function (subscriber){
+               observables[property].subscribe(subscriber);
+            }
         };
+        // create an observable and initialize with value from json
         observables[property] = types[schema[property].type](pdescriptors[property].jsonbinding.get());
     }
-    return {observables:observables, properties:pdescriptors};
+    oState.observables = observables;
+    oState.properties = pdescriptors;
+    return oState;
 };
 
 var getJson = function(source){
@@ -11117,7 +11166,7 @@ var getJson = function(source){
 
 
 module.exports = TObservableState;
-},{"../../lib/traits-0.4.js":13,"../common/utils.js":15,"./dsm":18,"./types":19,"knockout":10}],17:[function(require,module,exports){
+},{"../../lib/traits-0.4.js":13,"../common/utils.js":15,"./dsm":20,"./types":22,"knockout":10}],18:[function(require,module,exports){
 var TObservableState = require('./TObservableState.js');
 
 var schema = {
@@ -11130,13 +11179,7 @@ var schema = {
         path: "scale.unit",
         type: "string",
         editable: true,
-        validator: {
-            bind:function (collector, observable, name) {
-                observable.subscribe(function (value) {
-                    if (value !== "relative" && value !== "absolute") collector.addError(name, "unknown scale");
-                    else collector.clearError(name);
-                })
-            }}
+        validations: [{isValid:function(value){return value == "relative" || value == "absolute"}, msg: "Unknown scale"}]
     }
 }
 
@@ -11145,7 +11188,51 @@ function TObservableSymptom(){
 }
 
 module.exports = TObservableSymptom;
-},{"./TObservableState.js":16}],18:[function(require,module,exports){
+},{"./TObservableState.js":17}],19:[function(require,module,exports){
+var DSM = require('./dsm');
+var Trait = DSM.TraitJS;
+//var ko = require('../../lib/ko.observable.dictionary.js');  // load plugin
+
+/**
+ * The state validator binds validation functions
+ *
+ * @constructor
+ */
+function TStateValidator(){
+    var validations = {};
+    var addValidation = function (state, collector){
+        var property;
+        var validators; // validators of a property
+        for(property in state.properties){
+            validators = state.properties[property].validations;
+            if(validators){
+                for(var i = 0 ; i < validators.length; i++){
+                    validations[property + i] = validators[i];
+                    state.properties[property].onUpdate(function (value){
+                        validators[i].isValid(value)
+                            ? collector.clearError()
+                            : collector.addError(property, validators[i].msg)});
+                }
+            }
+        }
+    };
+
+    var StateValidator = Trait({
+        state: Trait.required,
+        errors:Trait.required,
+        hasValidation: function(){
+            return Object.keys(validations).length > 0;
+        }
+    });
+    StateValidator.initialize = function(){
+        addValidation(this.state(), this);
+    };
+    return DSM.traitify(StateValidator);
+}
+
+
+module.exports = TStateValidator;
+},{"./dsm":20}],20:[function(require,module,exports){
 var Trait = require('../../lib/traits-0.4.js');
 
 /**
@@ -11174,7 +11261,6 @@ var _traitify = function(){
     composed.newInstance = function(parameters){
         var params = parameters || {};
         var proto = params.proto || Object.prototype; // a trait instance may have a custom prototype object
-        console.log(JSON.stringify(proto));
         var instance = Trait.create(proto, composed);
         initialize(instance, params);
         return instance;
@@ -11188,7 +11274,14 @@ var dsm = {
 };
 
 module.exports = dsm;
-},{"../../lib/traits-0.4.js":13}],19:[function(require,module,exports){
+},{"../../lib/traits-0.4.js":13}],21:[function(require,module,exports){
+module.exports = {
+    TObservableState: require('./TObservableState.js'),
+    TErrorCollector: require('./TErrorCollector.js'),
+    TStateValidator: require('./TStateValidator.js'),
+    compose: require('./dsm').traitify
+}
+},{"./TErrorCollector.js":16,"./TObservableState.js":17,"./TStateValidator.js":19,"./dsm":20}],22:[function(require,module,exports){
 var ko = require('knockout');
 
 /**
@@ -11209,8 +11302,9 @@ var types = {
 
 
 module.exports = types;
-},{"knockout":10}],20:[function(require,module,exports){
-module.exports = {symptoms: {
+},{"knockout":10}],23:[function(require,module,exports){
+module.exports = {
+    symptoms: {
     sid: 32133,
     cName: 'Abdominal Pain',
     desc: "Pain in the area of the abdomen",
@@ -11229,16 +11323,11 @@ module.exports = {symptoms: {
             path: "scale.unit",
             type: "string",
             editable: true,
-            validator: {
-                bind:function (collector, observable, name) {
-                observable.subscribe(function (value) {
-                    if (value !== "relative" && value !== "absolute") collector.addError(name, "unknown scale");
-                    else collector.clearError(name);
-                })
-            }}
+            validations: [{isValid:function(value){return value == "relative" || value == "absolute"}, msg: "Unknown scale"}]
         }
-    }}
-},{}],21:[function(require,module,exports){
+    }
+}
+},{}],24:[function(require,module,exports){
 var assert = require("assert");
 var catalogues = require("../src/modules/common/catalogues");
 var symptomData = require("../src/data/symptoms");
@@ -11257,17 +11346,59 @@ describe('Test catalogue', function(){
         })
     })
 })
-},{"../src/data/symptoms":11,"../src/modules/common/catalogues":14,"assert":1}],22:[function(require,module,exports){
+},{"../src/data/symptoms":11,"../src/modules/common/catalogues":14,"assert":1}],25:[function(require,module,exports){
 var assert = require("assert");
 var utils = require("../src/modules/common/utils");
 describe('Test orb', function(){
     describe('#getValue()', function(){
         it('returns the value resolved by a give path expression', function(){
-            assert.equal("astring", utils.orb.getValue({a:{b:{c:"astring"}}}, "a.b.c"));
+            assert.equal("astring", utils.orb.value("a.b.c").from({a:{b:{c:"astring"}}}).get());
         });
     })
 })
-},{"../src/modules/common/utils":15,"assert":1}],23:[function(require,module,exports){
+},{"../src/modules/common/utils":15,"assert":1}],26:[function(require,module,exports){
+var expect = require("expect.js")
+var Traits = require('../src/modules/dsm/traits.js')
+var Data = require('./data/test.models');
+
+describe('Compositions', function(){
+
+    var dsm;
+    beforeEach(function (done){
+        var TObservable = Traits.TObservableState({schema:Data.mapdsm});
+        var TErrorReporter = Traits.TErrorCollector();
+        var TStateValidator = Traits.TStateValidator();
+        dsm = Traits.compose(TObservable, TErrorReporter, TStateValidator).newInstance({json:Data.symptoms});
+        done();
+    });
+
+    describe('Composed DSM', function(){
+        it('should have the required public interface', function(){
+            expect(dsm).not.to.be(undefined);
+            expect(dsm).to.have.property("state");
+            expect(dsm.state()).not.to.be(undefined);
+            expect(dsm).to.have.property("addError");
+            expect(dsm).to.have.property("state");
+            expect(dsm.state().observables.sid()).to.be(32133);
+            expect(dsm.sid).to.be(32133);
+        });
+    })
+
+    describe('#empty error collector', function(){
+
+        describe('#Error binding', function(){
+            it('should collect errors when invalid values are set to properties of observable state', function(){
+                expect(dsm.hasErrors()).to.be(false);
+                expect(dsm.unit).to.be('relative');
+                dsm.unit = "invalid unit";
+                expect(dsm.hasErrors()).to.be(true);
+            });
+        })
+    })
+})
+
+
+},{"../src/modules/dsm/traits.js":21,"./data/test.models":23,"expect.js":9}],27:[function(require,module,exports){
 var expect = require("expect.js")
 var TObservableState = require("../src/modules/dsm/TObservableState.js");
 var Data = require('./data/test.models');
@@ -11296,13 +11427,13 @@ describe('ObservableState Trait', function(){
         it('the instantiated object has a working model', function(){
             expect(instance).to.have.property("state");
             expect(instance.state()).not.to.be(undefined);
-            expect(instance.state().sid.observable()).to.be(32133);
+            expect(instance.state().observables.sid()).to.be(32133);
             expect(instance.sid).to.be(32133);
         });
     })
 })
 
-},{"../src/modules/dsm/TObservableState.js":16,"./data/test.models":20,"expect.js":9}],24:[function(require,module,exports){
+},{"../src/modules/dsm/TObservableState.js":17,"./data/test.models":23,"expect.js":9}],28:[function(require,module,exports){
 var expect = require("expect.js")
 var TObservableSymptom = require("../src/modules/dsm/TObservableSymptom.js");
 var Data = require('./data/test.models');
@@ -11319,10 +11450,10 @@ describe('TObservableSymptom', function(){
         it('without prototype and with valid params return a working instance', function(){
             expect(instance).to.have.property("sid"); // dynamic property generated from json
             expect(instance).to.have.property("unit"); // dynamic property generated from json
-            expect(instance.state().sid.observable()).to.be(32133);
+            expect(instance.state().observables.sid()).to.be(32133);
             expect(instance.sid).to.be(32133);
         });
     })
 })
 
-},{"../src/modules/dsm/TObservableSymptom.js":17,"./data/test.models":20,"expect.js":9}]},{},[21,22,23,24])
+},{"../src/modules/dsm/TObservableSymptom.js":18,"./data/test.models":23,"expect.js":9}]},{},[24,25,27,28,26])

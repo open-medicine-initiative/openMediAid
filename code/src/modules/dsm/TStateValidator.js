@@ -1,6 +1,5 @@
 var DSM = require('./dsm');
 var Trait = DSM.TraitJS;
-//var ko = require('../../lib/ko.observable.dictionary.js');  // load plugin
 
 /**
  * The state validator binds validation functions
@@ -9,18 +8,6 @@ var Trait = DSM.TraitJS;
  */
 function TStateValidator(){
     var validations = {};
-    var addValidation = function (state, collector){
-        var property;
-        for(property in state.properties){
-            if(state.properties[property].validator){
-                validations[property] = state.properties[property].validator;
-                validations[property].bind(
-                    collector,
-                    state.observables[property],
-                    property);
-            }
-        }
-    };
 
     var StateValidator = Trait({
         state: Trait.required,
@@ -30,10 +17,34 @@ function TStateValidator(){
         }
     });
     StateValidator.initialize = function(){
-        addValidation(this.state(), this);
+        addValidation(this.state(), this, validations);
     };
     return DSM.traitify(StateValidator);
 }
+
+
+function addValidation (state, collector, validations){
+    var property;
+    var validators; // validators of a property
+    for(property in state.properties){
+        validators = state.properties[property].validations;
+        if(validators){
+            validations[property] = validators;
+            addValidationToProperty(state.properties[property], validators, collector);
+        }
+    }
+};
+
+function addValidationToProperty (property, validators, collector){
+    property.onUpdate(function (value){
+        for(var i = 0 ; i < validators.length; i++){
+            validators[i].isValid(value)
+                ? collector.clearError()
+                : collector.addError(property.name, validators[i].msg)
+        }
+    });
+}
+
 
 
 module.exports = TStateValidator;

@@ -65,19 +65,26 @@ function TObservableState(options){
  * @returns An object containing the property and meta data for all mapped json properties
  */
 var parseState = function(json, schema){
+    var oState = {};
     var pdescriptors = {};
     var observables = {};
     for(var property in schema){
         pdescriptors[property] = {
             name:property,
-            validator: schema[property].validator,
+            validations: schema[property].validations,
             editable:schema[property].editable,
             path: schema[property].path,
-            jsonbinding: Utils.orb.value(schema[property].path).from(json) // value references to set values on the provided json
+            jsonbinding: Utils.orb.value(schema[property].path).from(json), // value references to set values on the provided json
+            onUpdate: function (subscriber){
+               observables[property].subscribe(subscriber);
+            }
         };
+        // create an observable and initialize with value from json
         observables[property] = types[schema[property].type](pdescriptors[property].jsonbinding.get());
     }
-    return {observables:observables, properties:pdescriptors};
+    oState.observables = observables;
+    oState.properties = pdescriptors;
+    return oState;
 };
 
 var getJson = function(source){
