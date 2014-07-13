@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/w2ui-1.3.2.css" />
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="lib/w2ui-1.3.2.js"></script>
+    <script type="text/javascript" src ="lib/knockout-3.1.0.js" ></script>
+    <script type="text/javascript" src ="lib/ko.observable.dictionary.js" ></script>
+
+</head>
+<body>
+<div id="searchbox">
+    Search:
+    <input data-bind="value:sid, valueUpdate:'input'" />
+    <input data-bind="value:unit, valueUpdate:'input'" />
+
+    <input type="submit" data-bind="click:toJson " />
+
+</div>
+
+<div id="errorcontainer" data-bind="template: { name: 'errors', foreach: errors.items}" style="border: 1px solid red">
+     <!-- errors go here-->
+
+</div>
+
+<script type="text/html" id="errors">
+    <span data-bind="text: key" style="float:left;margin-right:10px"></span>:
+    <span data-bind="text: value"></span><br/>
+</script>
+
+
+<script type="text/javascript">
+    var collector = new ErrorCollector();
+    var json = {
+        sid:32133,
+        cName: 'Abdominal Pain',
+        desc: "Pain in the area of the abdomen",
+        scale:{
+            unit: 'relative',
+            values:[0,1,2,3,4,5]
+        }
+    };
+
+    var statemodel = {
+        sid:{
+            path: "sid",
+            type: "number",
+            editable: false
+        },
+        unit:{
+            path:"scale.unit",
+            type: "string",
+            editable:true,
+            validator: {
+                description: "Some description for developers",
+                bind: function (collector, observable, name){
+                observable.subscribe(function(value){
+                    if(value !== "relative" && value !== "absolute") collector.addError(name, "unknown scale");
+                    else collector.clearError(name);
+                })}
+            }
+        }
+    }
+
+    var types = {
+        string: function(value){
+            return ko.observable(value);
+        },
+        number:function(value){
+            return ko.observable(value);
+        },
+        array:function(value){
+            return ko.observableArray(value);
+        }
+
+    }
+
+    function DomainModel(json, schema, collector){
+        var self = {};
+        var observableState = parseState(json, schema);
+        var toJson = function(json, state){
+            return function(){
+                for(var property in state){
+                    utils.setValue(json, state[property].path, state[property].observable());
+                }
+                console.log(json);
+            }
+        }
+        generateProperties(observableState, self);
+        addValidation(observableState, collector);
+        self.toJson= toJson(json, observableState);
+        return self;
+    }
+
+    var utils = (function(){
+        // this function is used to traverse an object using path expression in dot notation
+        // e.g. path = "a.b.c" -> root[a][b][c]
+        var getValue = function(root, path, exclude){
+        path = path.split(".");
+        if(!exclude)exclude = 0;
+        for(var i = 0; i < path.length - exclude ; i++){
+            root = root[path[i]];  //TODO: handle undefined
+        }
+        return root;
+        };
+        var setValue = function(root, path, value){
+            root = getValue(root, path, 1);
+            path = path.split(".");
+            root[path[path.length-1]] = value;
+        }
+
+        return {
+            setValue : setValue,
+            getValue : getValue
+        };
+    }());
+
+    function parseState(json, schemas){
+        var observableState = {};
+
+        for(var property in schemas){
+           observableState[property] = {
+               observable: types[schemas[property].type](utils.getValue(json, schemas[property].path)),
+               alias:property,
+               validator: schemas[property].validator,
+               editable:schemas[property].editable,
+               path: schemas[property].path
+           }
+        }
+        return observableState;
+    }
+
+    function ErrorCollector(){
+            this.errors = new ko.observableDictionary({}),
+
+            this.addError =  function (name, message){
+                this.errors.push(name, message);
+            }
+
+            this.clearError = function(name){
+                this.errors.remove(name);
+            }
+            this.hasErrors = function (){
+                return !this.errors().isEmpty();
+            }
+    }
+
+    function addValidation(observables, collector){
+        for(var property in observables){
+            if(observables[property].validator)
+                observables[property].validator.bind(collector, observables[property].observable, observables[property].alias)
+        }
+    }
+
+    /**
+     * Map the observables (internal state) to getter/setter of target
+     * such that it can easily operate on its private observable state
+     * without caring about the values actually being observables
+     *
+     * @param observables
+     * @param target
+     */
+    function generateProperties(observables, target){
+        for(var property in observables){
+            // enclose in function to get closure context right
+            mapProperty(observables[property], target, property);
+        }
+    }
+    function mapProperty(observable, target, property){
+        Object.defineProperty(target, property, {
+            get : function () {
+                return observable.observable();
+            },
+            set : function (val) {
+                if(observable.editable)observable.observable(val);
+            }
+        });
+    }
+
+    ko.applyBindings(collector, document.getElementById('errorcontainer'))
+    ko.applyBindings(DomainModel(json, statemodel, collector), document.getElementById('searchbox'))
+</script>
+
+</body>
+</html>

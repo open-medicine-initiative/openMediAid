@@ -14,9 +14,10 @@ gulp.task('test:browserify', function () {
 
 function createBrowserifiedTests() {
     browserify([
-        opts.test + "common.catalogues.js",
-        opts.test + "common.utils.js",
-        opts.test + "ui.jsonform.js"
+        opts.test + "test.common.catalogues.js",
+        opts.test + "test.common.utils.js",
+        opts.test + "test.dsm.tobservablestate.js",
+        opts.test + "test.dsm.tobservablesymptom.js"
     ])
         .bundle()
         // transform the stream to be gulp compatible
@@ -44,7 +45,11 @@ gulp.task('test', function () {
     }
     else {
         return  gulp.src(opts.test + '*.js')
-            .pipe(mocha({ reporter: 'list' }));
+            .pipe(mocha({ reporter: 'list' })
+                 .on("error", function(error){
+                    error.showstack = true; // make mocha print stack traces for errors coming from application code
+                    throw error;
+            }));
     }
 });
 
@@ -58,12 +63,13 @@ gulp.task('test:coverage', function () {
             reporter: 'list'
         }))
         .pipe(blanket({
-            // Blanket  needs to be told explicitly which files to instrument.
+            // Blanket needs to be told explicitly which files to instrument for test coverage analysis
             instrument: [
                "src/modules/common/catalogues.js",
-                "src/modules/common/utils.js"],
+               "src/modules/common/utils.js"],
             // where to render the reporter output
             captureFile: 'build/reports/test-coverage.html',
+            // the report format
             reporter: 'html-cov'
         }));
 });
