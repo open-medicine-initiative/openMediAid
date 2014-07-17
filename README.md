@@ -16,8 +16,6 @@ how to use this potential in order to increase collective health.
 Read more about Medium's [motivation and philosophy](http://github.com/bennidi/medium/Motivation-and-Philosophy)
 
 
-Note:
-Medium is not a diagnostic tool that can tell you for sure what your condition is or what therapy will work for you.
-It is not meant to replace consultation of experts in medicine. It is rather a source of information that can provide valuable information to
-support the diagnostic process and inform about all possible options of therapy. Its suggestions are based on the experiences made by its users.
+
+> [Disclaimer:](http://github.com/bennidi/medium/Disclaimer)Medium is not a diagnostic tool that can tell you for sure what your condition is or what therapy will work for you
 
