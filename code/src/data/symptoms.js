@@ -22,17 +22,17 @@ var symptoms = {
             sid:32133,
             cName: 'Abdominal Pain',
             desc: "Pain in the area of the abdomen",
-            attributes:{
-                unit: 'relative'
-
+            scale: {
+                unit: 'relative',
+                values: [0, 1, 2, 3, 4, 5]
             }
         },
         {
             sid:32134,
             cName: 'Abdominal Irritation',
-            attributes:{
-                unit: 'relative'
-
+            scale: {
+                unit: 'relative',
+                values: [0, 1, 2, 3, 4, 5]
             }
         }
     ]

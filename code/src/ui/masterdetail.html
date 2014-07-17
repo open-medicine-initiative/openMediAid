@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/w2ui-1.3.2.css" />
+    <script src="lib/jquery-2.1.1.js"></script>
+    <script type="text/javascript" src="lib/w2ui-1.3.2.js"></script>
+    <script type="text/javascript" src ="lib/knockout-3.1.0.js" ></script>
+    <script type="text/javascript" src ="../modules/web-bundle.js" ></script>
+    <script src="lib/koGrid-2.1.1.debug.js"></script>
+    <link rel="stylesheet" href="css/KoGrid.css"/>
+
+</head>
+<body>
+
+<style type="text/css">
+
+    .inbox {
+        border: 1px solid rgb(212, 212, 212);
+        width: 800px;
+        height: 300px;
+    }
+
+    .attachments {
+        border: 1px solid rgb(212, 212, 212);
+        width: 800px;
+        height: 100px;
+    }
+
+</style>
+
+
+
+<!-- the inbox grid view-->
+<div class="inbox" data-bind="koGrid: symptoms" id="rm:inbox"></div>
+
+<script type="text/javascript">
+
+    var medium = require("medium");
+    var provider = medium.traits.TDataProvider().newInstance({
+        provider: function(query){
+            return medium.data.symptoms.entries;
+        }
+    });
+    var masterdetail = medium.traits.TMasterDetail(medium.traits.TObservableSymptom()).newInstance({
+        provider: provider
+    })
+
+    function InboxGridModel() {
+        var self = {};
+        self.symptoms = {
+            data:ko.observableArray(masterdetail.list()),
+            displaySelectionCheckbox:false,
+            multiSelect:false,
+            footerRowHeight:30,
+            headerRowHeight:25,
+            beforeSelectionChange:function (row) {
+
+                return true;
+            },
+            columnDefs:[
+                {field:{alias:"synonyms", accessor:function (item) {
+                    return ""; // TODO: lookup synonyms from catalogue
+                }}, displayName:'From'},
+                {field:{alias:"cName", accessor:function (item) {
+                    return item.cName + '</span>'
+                }}, displayName:'To'},
+                {field:'sid', displayName:'SID'}
+            ]
+        };
+        return self;
+    }
+
+    ko.applyBindings(InboxGridModel());
+
+</script>
+
+
+
+</body>
+</html>

@@ -17,3 +17,5 @@ function TName(){
     return DSM.traitify(Name);
 
 }
+
+module.exports = TName;

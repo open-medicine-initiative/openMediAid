@@ -33,14 +33,16 @@ function addValidation (state, collector, validations){
             addValidationToProperty(state.properties[property], validators, collector);
         }
     }
-};
+}
 
 function addValidationToProperty (property, validators, collector){
     property.onUpdate(function (value){
         for(var i = 0 ; i < validators.length; i++){
-            validators[i].isValid(value)
-                ? collector.clearError()
-                : collector.addError(property.name, validators[i].msg)
+            if(validators[i].isValid(value)){
+                collector.clearError();
+            }else{
+                collector.addError(property.name, validators[i].msg);
+            }
         }
     });
 }

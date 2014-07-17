@@ -6,7 +6,7 @@ describe('Trait performance: ', function(){
 
     var loops = 10000;
     var begin;
-    var expectedTimePerOp;
+    var expectedTimePerOp; // todo: calculate baseline to be somewhat machine independent
     beforeEach(function (done){
         begin = Date.now();
         done();

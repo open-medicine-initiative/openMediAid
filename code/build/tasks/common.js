@@ -25,7 +25,8 @@ gulp.task('lint', function () {
     gulp.src(opts.modules + '**/*.js')
         .pipe(jshint())
         .pipe(jshint.reporter(jshintstylish))
-        .pipe(jshint.reporter('fail'));
+        .pipe(jshint.reporter('fail'))
+    ;
 });
 
 module.exports = {};

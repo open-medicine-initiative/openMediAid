@@ -69,25 +69,34 @@ var parseState = function(json, schema){
     var pdescriptors = {};
     var observables = {};
     for(var property in schema){
-        pdescriptors[property] = {
+        var path = schema[property].path || property;
+        var observable;
+        var pdescriptor;
+        pdescriptor = {
             name:property,
             validations: schema[property].validations,
             editable:schema[property].editable,
             path: schema[property].path,
-            jsonbinding: Utils.orb.value(schema[property].path).from(json), // value references to set values on the provided json
-            onUpdate: function (subscriber){
-               observables[property].subscribe(subscriber);
-            }
+            jsonbinding: Utils.orb.value(path).from(json) // value references to set values on the provided json
         };
+        pdescriptors[property] = pdescriptor;
+        observable = types[schema[property].type](pdescriptors[property].jsonbinding.get());
         // create an observable and initialize with value from json
-        observables[property] = types[schema[property].type](pdescriptors[property].jsonbinding.get());
+        observables[property] = observable;
+        addOnUpdate(pdescriptor, observable);
     }
     oState.observables = observables;
     oState.properties = pdescriptors;
     return oState;
 };
 
-var getJson = function(source){
+function addOnUpdate(pdescriptor, observable){
+    pdescriptor.onUpdate = function (subscriber){
+        observable.subscribe(subscriber);
+    };
+}
+
+function getJson(source){
     // TODO: throw Exception?
     // TODO: maybe make defensive deep copy of json if configured
     if(source){
