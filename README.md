@@ -18,6 +18,6 @@ Read more about Medium's [motivation and philosophy](http://github.com/bennidi/m
 
 
 
-> [Disclaimer](http://github.com/bennidi/medium/Disclaimer)
+> [Disclaimer](http://github.com/bennidi/medium/Disclaimer) <br />
 Medium is not a diagnostic tool that can tell you for sure what your condition is or what therapy will work for you.
 
