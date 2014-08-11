@@ -14,7 +14,7 @@ The idea of Medium builds on the fact that every patient is an active agent in t
 The endeavour of turning the idea of Medium into reality has just begun. The first step was the creation of an online space where people can participate to develop the idea further, build data models, write code and finally release the first prototype. This is what this github repository will be used for.
 
 The [issue](https://github.com/bennidi/medium/issues) list is used as a major collaboration tool to collect and develop ideas, index and document on and offline resources, track code issues etc. Issue labels and milestones are used to organize issues into meaningful groups. Available labels are:
- + *task*: Tasks describe work that needs to be done
+ + *[task](https://github.com/bennidi/medium/issues?q=label%3Atask+)*: Tasks describe work that needs to be done
  + *use case*: The development part of the medium platform will be use case driven, as such the term use case is in the ordinary software development sense of the term: A description of a set of user interactions necessary to complete a task that people want to accomplish with the medium platform.
  + *peer*: We want to learn from what and how others are doing
  + *data*: Available medical data will help in the initial development phase
