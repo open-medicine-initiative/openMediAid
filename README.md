@@ -13,19 +13,16 @@ The idea of Medium builds on the fact that every patient is an active agent in t
 # Project plan
 The endeavour of turning the idea of Medium into reality has just begun. The first step was the creation of an online space where people can participate to develop the idea further, build data models, write code and finally release the first prototype. This is what this github repository will be used for.
 
-The [issue](https://github.com/bennidi/medium/issues) list is used as a major collaboration tool to collect and develop ideas, index and document on and offline resources, track code issues etc. Issue labels and milestones are used to organize issues into meaningful groups. Available labels are:
+The [issue](https://github.com/bennidi/medium/issues) list is used as a major collaboration tool to collect and develop ideas, index and document on and offline resources, track code issues etc. Issue labels and milestones are used to organize issues into meaningful groups. Indexation by labels also allows for a good searchability. This is a list of the most important labels:
  + *[task](https://github.com/bennidi/medium/issues?q=label%3Atask+)*: Tasks describe work that needs to be done
  + *use case*: The development part of the medium platform will be use case driven, as such the term use case is in the ordinary software development sense of the term: A description of a set of user interactions necessary to complete a task that people want to accomplish with the medium platform.
  + *peer*: We want to learn from what and how others are doing
  + *data*: Available medical data will help in the initial development phase
- + *use case*: Development will be use case driven. A use case describes a set of user interactions necessary to complete a single task
  + *non-profit*: Mark a peer, medical service or other resource as non-profit
  + *commercial*: Mark a peer, medical service or other resource as commercial
  + *medical service*: A medical service that users may consume directly
  + *discourse*: To follow the public discourse on topics related to medicine
  + *study*: If the issue references a study
-
-
 
 ## Work in progress
 There is not yet an established and detailed project plan that can be followed to make the project a success. There are of course many ideas floating around and a reasonable set of necessary actions.
