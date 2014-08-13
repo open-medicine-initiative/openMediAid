@@ -1,7 +1,7 @@
 Medium - Social Healthshare
 ======
 
-> An open medicine platform that applies ideas from social web software and recommender systems to the field of medicine to make a step towards [crowdsourced](https://github.com/bennidi/medium/wiki/Crowdsourcing) health care.
+> An open medicine platform that automates word-of-mouth recommendations by applying ideas from social web software and recommender systems to the field of medicine and make a step towards [crowdsourced](https://github.com/bennidi/medium/wiki/Crowdsourcing) health care.
 
 Medium aims to accelerate the process of finding proper diagnosis and effective treatment of medical conditions by using the knowledge of the [crowd](https://github.com/bennidi/medium/wiki/Crowdsourcing).
 The idea is simple: People anonymously document and share their medical data using modern web software. Machine learning techniques are then applied to match people's medical stories, find useful pieces of information and selectively distribute them to the users who might benefit. This works on demand when people are actively searching for medical information regarding their own, a friends or a patients case resulting in suggestions about matching medical conditions, possibly relevant clinical tests or potentially useful therapeutic means. It also works automagically when people with similar medical stories will be linked with each other to constantly receive updates about the progress and discoveries made by their [peers](https://github.com/bennidi/medium/wiki/Medical-Profiles#medical-buddies) such that individual learnings quickly spread through the network.
