@@ -1,10 +1,8 @@
 Medium - Social Healthshare
 ======
+> An open medicine platform aiming to support patients in their search for correct diagnosis and effective treatments. It uses machine learning techniques to automate word-of-mouth recommendations and make data mining of medical data available the public. Patients and medical experts collaborate to make [another](https://github.com/bennidi/medium/wiki/Crowdsourcing#Crowdsourced-health-care) step towards crowd-sourced health care.
 
-> An open medicine platform that automates word-of-mouth recommendations by applying ideas from social web software and recommender systems to the field of medicine and make a step towards [crowdsourced](https://github.com/bennidi/medium/wiki/Crowdsourcing) health care.
-
-Medium aims to accelerate the process of finding proper diagnosis and effective treatment of medical conditions by using the knowledge of the [crowd](https://github.com/bennidi/medium/wiki/Crowdsourcing).
-The idea is simple: People anonymously document and share their medical data using modern web software. Machine learning techniques are then applied to match people's medical stories, find useful pieces of information and selectively distribute them to the users who might benefit. This works on demand when people are actively searching for medical information regarding their own, a friends or a patients case resulting in suggestions about matching medical conditions, possibly relevant clinical tests or potentially useful therapeutic means. It also works automagically when people with similar medical stories will be linked with each other to constantly receive updates about the progress and discoveries made by their [peers](https://github.com/bennidi/medium/wiki/Medical-Profiles#medical-buddies) such that individual learnings quickly spread through the network.
+Medium aims to accelerate the process of finding proper diagnosis and effective treatment of medical conditions by using the knowledge of the [crowd](https://github.com/bennidi/medium/wiki/Crowdsourcing). The idea is simple: People anonymously document and share their medical data using modern web software. Machine learning techniques are then applied to match people's medical stories, find useful pieces of information and selectively distribute them to the users who might benefit. This works on demand when people are actively searching for medical information regarding their own, a friends or a patients case resulting in suggestions about matching medical conditions, possibly relevant clinical tests or potentially useful therapeutic means. It also works automagically when people with similar [medical profiles](https://github.com/bennidi/medium/wiki/Medical-Profiles) will be linked with each other to constantly receive updates about the progress and discoveries made by their [peers](https://github.com/bennidi/medium/wiki/Medical-Profiles#medical-buddies) such that individual learnings quickly spread through the network.
 
 The provided medical data will also be used to compile catalogues of common medical knowledge, including lots and lots of statistics. These statistics are meant to provide guidance for the users to assess efficiencies of drugs and therapy, as well as risks like treatment side-effects or possible surgery complications. Read more about the [mission statement](http://github.com/bennidi/medium/wiki/Mission-Statement) and [how it works](http://github.com/bennidi/medium/wiki/How-it-works). Medium will include and promote methods of alternative medicine as well as any other methods that people invent for themselves as long as there are enough people claiming its benefits.
 
@@ -15,15 +13,15 @@ The idea of Medium builds on the fact that every patient is an active agent in t
 The endeavour of turning the idea of Medium into reality has just begun. The first step was the creation of an online space where people can participate to develop the idea further, build data models, write code and finally release the first prototype. This is what this github repository will be used for.
 
 The [issue](https://github.com/bennidi/medium/issues) list is used as a major collaboration tool to collect and develop ideas, index and document on and offline resources, track code issues etc. Issue labels and milestones are used to organize issues into meaningful groups. Indexation by labels also allows for a good searchability. This is a list of the most important labels:
- + *[task](https://github.com/bennidi/medium/issues?q=label%3Atask+)*: Tasks describe work that needs to be done
- + *use case*: The development part of the medium platform will be use case driven, as such the term use case is in the ordinary software development sense of the term: A description of a set of user interactions necessary to complete a task that people want to accomplish with the medium platform.
- + *peer*: We want to learn from what and how others are doing
- + *data*: Available medical data will help in the initial development phase
- + *non-profit*: Mark a peer, medical service or other resource as non-profit
- + *commercial*: Mark a peer, medical service or other resource as commercial
- + *medical service*: A medical service that users may consume directly
- + *discourse*: To follow the public discourse on topics related to medicine
- + *study*: If the issue references a study
+ + *[task](https://github.com/bennidi/medium/labels/task)*: Tasks describe work that needs to be done
+ + *[use case](https://github.com/bennidi/medium/labels/use case)*: The development part of the medium platform will be use case driven, as such the term use case is in the ordinary software development sense of the term: A description of a set of user interactions necessary to complete a task that people want to accomplish with the medium platform.
+ + *[peer](https://github.com/bennidi/medium/labels/peer)*: We want to learn from what and how others are doing
+ + *[data](https://github.com/bennidi/medium/labels/data)*: Available medical data will help in the initial development phase
+ + *[non-profit](https://github.com/bennidi/medium/labels/non-profit)*: Mark a peer, medical service or other resource as non-profit
+ + *[commercial](https://github.com/bennidi/medium/labels/commercial)*: Mark a peer, medical service or other resource as commercial
+ + *[medical service](https://github.com/bennidi/medium/labels/medical service)*: A medical service that users may consume directly
+ + *[discourse](https://github.com/bennidi/medium/labels/discourse)*: To follow the public discourse on topics related to medicine
+ + *[study](https://github.com/bennidi/medium/labels/study)*: If the issue references a study
 
 ## Work in progress
 There is not yet an established and detailed project plan that can be followed to make the project a success. There are of course many ideas floating around and a reasonable set of necessary actions.
