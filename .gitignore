@@ -14,10 +14,13 @@
 # personal #
 todos.txt
 
-# generated artefacts #
-code/build/jsdoc
-code/build/dist
-code/build/reports
+# generated build artefacts #
+code/dist
+code/dist/jsdoc
+code/dist/reports
+
+# generated test artefacts #
+code/test-gen
 
 # node.js modules #
 code/node_modules

@@ -1,4 +1,5 @@
-var opts = require('./settings');
+var settings = require('./settings');
+var paths = settings.paths;
 var gulp = require('gulp');
 var gulpif = require('gulp-if');
 var rename = require('gulp-rename');
@@ -9,7 +10,7 @@ var source = require("vinyl-source-stream");
 
 gulp.task('jsdoc', ["lint", "clean"], function () {
     var infos = {
-        name: opts.pkgjson.name,
+        name: settings.pkgjson.name,
         plugins: ['plugins/markdown']
     };
     var template = {
@@ -30,9 +31,9 @@ gulp.task('jsdoc', ["lint", "clean"], function () {
         outputSourceFiles: true
     };
 
-    gulp.src([opts.modules + "**/*.js", "README.md"])
+    gulp.src([paths.modules + "**/*.js", "./build/jsdoc/README.md"])
         .pipe(jsdoc.parser(infos))
-        .pipe(jsdoc.generator(opts.jsdoc, template, options));
+        .pipe(jsdoc.generator(paths.jsdoc, template, options));
 });
 
 /**
@@ -41,19 +42,20 @@ gulp.task('jsdoc', ["lint", "clean"], function () {
  **/
 gulp.task('build', ["prepare", "lint", "test"], function () {
     // process modules with browserify such that they work
+    // in environments without knowledge of require
     browserify()
         .require("./src/modules/web-bundle.js", {expose:"medium"})
         .bundle()
         // transform the stream to be node compatible (using vinyl)
         .pipe(source('web-bundle.js'))
         //.pipe(uglify())
-        .pipe(gulp.dest(opts.target + "modules/"));
+        .pipe(gulp.dest(paths.target + "modules/"));
 
     // copy external libraries
-    gulp.src(opts.src + "lib/**/*.js")
-        .pipe(gulp.dest(opts.target + "lib/"));
+    gulp.src(paths.src + "lib/**/*.js")
+        .pipe(gulp.dest(paths.target + "lib/"));
 
     // copy the user-interface
-    gulp.src(opts.src + "ui/**/*.*")
-        .pipe(gulp.dest(opts.target + "ui/"));
+    gulp.src(paths.src + "ui/**/*.*")
+        .pipe(gulp.dest(paths.target + "ui/"));
 });

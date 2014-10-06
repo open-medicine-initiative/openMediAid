@@ -3,5 +3,5 @@ module.exports = {
     data:{
         symptoms : require("../data/symptoms")
     },
-    traits:require("./dsm/traits.js")
+    traits:require("./common/typo.js")
 };

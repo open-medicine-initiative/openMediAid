@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="css/w2ui-1.3.2.css" />
+    <script type="text/javascript" src="lib/require.js"></script>
+    <script type="text/javascript" src ="lib/components/tag/sampledata.js" ></script>
+
+</head>
+<body>
+
+
+<tag-tree></tag-tree>
+
+
+<script type="text/javascript">
+    require.config({
+        baseUrl:'lib',
+        paths: {
+            ko: 'ko',
+            comp:'components'
+        }
+    });
+    require(['ko/knockout', "components/tag/nodemodel"], function(ko, NodeModel) {
+        var model = new NodeModel(__sampleData.navTree);
+        console.log ("dnfs");
+
+        ko.components.register('tag-tree', {
+            viewModel: {instance: {treeData : ko.observable(model)}},
+            template: {require:"text!components/tag/tag.tmpl.html"}
+        });
+        ko.components.register('tag', {
+            template: {require:"text!components/tag/tag.tmpl.html"}
+        });
+
+        ko.applyBindings();
+    });
+
+
+</script>
+
+</body>
+</html>

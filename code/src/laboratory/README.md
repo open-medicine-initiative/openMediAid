@@ -1,0 +1,1 @@
+The laboratory is the space where experimental code for prototyping is developed. Code residing in the lab will not have extensive test coverage and might even not work compile

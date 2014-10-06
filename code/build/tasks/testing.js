@@ -1,7 +1,8 @@
-var opts = require('./settings');
+var paths = require('./settings').paths;
 var gulp = require('gulp');
 var yargs = require('yargs');
 var _mocha = require('gulp-mocha');
+var gulpLiveScript = require('gulp-livescript');
 var mocha = function(params){
     return _mocha(params).on("error", function (error) {
         error.showstack = true; // make mocha print stack traces for errors coming from application code
@@ -13,9 +14,10 @@ var browserify = require('browserify');
 var source = require("vinyl-source-stream");
 var Finder = require("fs-finder");
 
-var Tests = {
-    all: Finder.in(opts.test).findFiles('test.*.js'),
-    perf: Finder.in(opts.test).findFiles('perf.*.js')
+var TestSuites = {
+    livescript: function(){return Finder.in(paths.test).findFiles('*.ls')},
+    all: function(){return Finder.in(paths.testgen).findFiles('test.*.js')},
+    perf: function(){return Finder.in(paths.test).findFiles('perf.*.js')}
 };
 
 // take all mocha tests in 'test' folder and use browserify to
@@ -28,8 +30,8 @@ function determineTestSet(yargs) {
     var sets = yargs.argv.tests.split(',');
     var selected = [];
     for (var i = 0; i < sets.length; i++) {
-        if (!Tests[sets[i]])throw new Error("Unknown test set:" + sets[i]);
-        selected = selected.concat(Tests[sets[i]]);
+        if (!TestSuites[sets[i]])throw new Error("Unknown test set:" + sets[i]);
+        selected = selected.concat(TestSuites[sets[i]]());
     }
     return selected;
 }
@@ -39,7 +41,7 @@ function createBrowserifiedTests(files) {
         .bundle()
         // transform the stream to be gulp compatible
         .pipe(source('alltests.js'))
-        .pipe(gulp.dest(opts.test + "inbrowser/"));
+        .pipe(gulp.dest(paths.test + "inbrowser/"));
 }
 
 function getYargs() {
@@ -59,15 +61,35 @@ function getYargs() {
     return args;
 }
 
-gulp.task('test', function () {
+gulp.task('test',['ls:gentests'], function () {
     var yargs = getYargs();
 
     if (yargs.argv.b) {
         createBrowserifiedTests(determineTestSet(yargs));
     }
-    return  gulp.src(determineTestSet(yargs))
+    var testsuites = determineTestSet(yargs);
+    return gulp.src(testsuites)
         .pipe(mocha({ reporter: 'list' }));
 });
+
+
+
+gulp.task('ls:gentests',['ls:base', 'ls:data'], function() {
+    return gulp.src(TestSuites.livescript())
+        .pipe(gulpLiveScript({bare: true}))
+        .pipe(gulp.dest(paths.testgen));
+});
+gulp.task('ls:base', function() {
+    return gulp.src(paths.test + "base/*.ls")
+        .pipe(gulpLiveScript({bare: true}))
+        .pipe(gulp.dest(paths.testgen + "base"));
+});
+gulp.task('ls:data', function() {
+    return gulp.src(paths.test + "data/*.ls")
+        .pipe(gulpLiveScript({bare: true}))
+        .pipe(gulp.dest(paths.testgen + "data"));
+});
+
 
 /**
  * Run all tests with mocha and generate coverage report for listed
@@ -77,7 +99,7 @@ gulp.task('test:coverage', function () {
     gulp.src(determineTestSet(), {read: false})
         .pipe(mocha({reporter: 'list'}))
         .pipe(blanket({
-            instrument: Finder.Finder.in(opts.modules).findFiles('*.js'),
+            instrument: Finder.Finder.in(paths.modules).findFiles('*.js'),
             // where to render the reporter output
             captureFile: 'build/reports/test-coverage.html',
             // the report format
