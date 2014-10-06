@@ -1,0 +1,47 @@
+<!--<ul data-bind="foreach: nodes">
+
+
+    <li>
+
+    <span data-bind="
+    text: name,
+    attr: { 'title': description },
+    tooltip: { delay: { show: 500, hide: 10 } },
+    click: toggleVisibility"></span>
+
+        <div data-bind="component: { name: 'tag', params: $data }, visible: isExpanded"></div>
+    </li>
+</ul>  -->
+
+<div id="nav-bar" data-bind="template: { name: 'folder-template', data: treeData }"></div>
+
+
+<script type="text/html" id="folder-template">
+
+    <ul data-bind="foreach: nodes">
+        <li>
+            <div data-bind="template: { name: 'node-template', data: $data }"></div>
+        </li>
+    </ul>
+
+</script>
+
+<script type="text/html" id="node-template">
+
+    <span class="tree-item" data-bind="
+    css: {
+        'glyphicon glyphicon-minus-sign': isExpanded && nodes.length > 0,
+        'glyphicon glyphicon-plus-sign': !isExpanded && nodes.length > 0,
+        'glyphicon glyphicon-stop': nodes.length === 0
+    }
+    "></span>
+
+    <span data-bind="
+    text: name,
+    attr: { 'title': description },
+    tooltip: { delay: { show: 500, hide: 10 } },
+    click: toggleVisibility"></span>
+
+    <div data-bind="template: { name: 'folder-template', data: $data }, visible: isExpanded"></div>
+
+</script>

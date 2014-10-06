@@ -22,5 +22,9 @@ code/dist/reports
 # generated test artefacts #
 code/test-gen
 
-# node.js modules #
+# package manager #
 code/node_modules
+code/src/bower_modules
+code/test/bower_modules
+
+
