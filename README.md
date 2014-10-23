@@ -1,6 +1,8 @@
 Medium - Social Healthshare
 ======
-> Medium is a [crowd-sourced](https://github.com/bennidi/medium/wiki/Crowdsourcing), open medicine platform aiming to help patients find appropriate diagnoses and effective treatments more quickly. Based on the comparison of medical records it identifies progress made by individuals and distributes their discoveries to users with similar profiles. Statistical information extracted from large sets of profiles is combined with established medical knowledge in order to generate suggestions about causes for symptoms and possible treatments (==>[Medical Decision Support System](https://github.com/bennidi/medium/wiki/Glossary#medical-decision-support-system)).  
+> Medium is a [crowd-sourced](https://github.com/bennidi/medium/wiki/Crowdsourcing), open medicine platform aiming to help patients find appropriate diagnoses and effective treatments more quickly. Based on the comparison of medical records it identifies progress made by individuals and distributes their discoveries to users with similar profiles. 
+
+> Statistical information extracted from large sets of profiles is combined with established medical knowledge in order to generate suggestions about causes for symptoms and possible treatments ( ==> [Medical Decision Support System](https://github.com/bennidi/medium/wiki/Glossary#medical-decision-support-system)).  
 
 ### Some problems of public health care
  The public health care system relies mainly on a small group of experts, expensive medical infrastructure and profit-oriented companies to provide medical services to a continuously growing number of people. This results in competition among patients for the limited available resources and a decline in quality of individual care. Receiving appropriate medical attention and advice, finding diagnosis or treatment options can easily turn into a time consuming and exhausting process.
@@ -44,12 +46,9 @@ The [issue](https://github.com/bennidi/medium/issues) list is used as the primar
 ## Work in progress
 There is no established and detailed project plan which can be followed to successfully develop the project. There are of course many ideas floating around and a foreseeable set of steps to be taken.
 
-* Build a first prototype to browse and manage medical data collaboratively: This is one of the major prerequisites for collaboration with medical experts. There must be an online system that allows to store medical expert knowledge and apply the knowledge to fake patient data for testing
-  * design and implement a first draft of the medical data model
-  * create REST api to expose the data model
-  * create web based UI to make the data model accessible to clinicians and other collaborators
+* Build a first prototype to browse and manage medical data collaboratively: This is one of the major prerequisites for collaboration with medical experts. There must be an online system that allows to store medical expert knowledge and apply the knowledge to invented patient data for testing. The tasks for this prototype are defined in [this](https://github.com/bennidi/medium/milestones/1.0.0%20-%20Medical%20Data%20Catalogues%20and%20Browserhttps://github.com/bennidi/medium/milestones/1.0.0%20-%20Medical%20Data%20Catalogues%20and%20Browser) milestone. 
 * Build a network and spread the idea: Finding supporters and engaging with the community of users is an ongoing process of the entire project. Especially in the initial phase it will be important to get feedback and connect with people who want to push the project
-* Start a crowd-funding campaign to make Medium a full-time project: To build a sophisticated system like Medium a stable core team is required. This team must be financed as people can not live from love and laughter. Hosting and other things will also consume money. At some point there must be some money involved in the project.
+* Start a crowd-funding campaign to make Medium a full-time project: To build a sophisticated system like Medium a stable core team is required. This team must be financed as people can not live from love and laughter. Hosting and other things will also consume money.
 
 # Contribute
 Medium can make use of virtually all support that somebody wants to give. From simple feedback in the projects issue list, code contributions, design suggestion, free licenses for interesting tools, hosting, to financial support. If you want to get involved just raise the topic in the [issue](https://github.com/bennidi/medium/issues) list. Here is a more specific list of possible contributions or necessary collaborations:
@@ -69,5 +68,5 @@ Medium can make use of virtually all support that somebody wants to give. From s
 
 
 [Disclaimer](http://github.com/bennidi/medium/wiki/Disclaimer)
-> Medium is by no means a diagnostic tool capable of providing irrefutable diagnoses or treatments. It is neither meant to replace doctor consultations nor disrupt established treatments. It is instead a space for patients and medical experts to collaborate and create a platform where individual experiences and expertise are stored in semantic data models, accessible to people and algorithmic processing. It will be free of charge, open source and built by and for the very people who want to use it.
+> Medium is by no means a diagnostic tool capable of providing irrefutable diagnoses or treatments. It is neither meant to replace doctor consultations nor disrupt established treatments. It is instead a space for patients and medical experts to collaborate and create a platform where individual experiences and expertise are stored in semantic data models publicly available to people and algorithmic processing. It will be free of charge, open source and built by and for the very people who want to use it.
 
