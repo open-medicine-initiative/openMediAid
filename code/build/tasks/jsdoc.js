@@ -3,10 +3,11 @@ var settings = require('./settings'),
     gulp = require('gulp'),
     jsdoc = require("gulp-jsdoc"),
     Finder = require("fs-finder"),
-    clean = require('gulp-clean');
+    clean = require('gulp-clean'),
+    deploy = require('gulp-gh-pages');
 
 function jsDocFiles(){
-    var jsModules = Finder.from(paths.modules).findFiles('*.js')
+    var jsModules = Finder.from(paths.modules).findFiles('*.js');
     var jsDocReadme = "./build/jsdoc/README.md";
     jsModules.push(jsDocReadme);
     return jsModules;
@@ -43,4 +44,9 @@ gulp.task('jsdoc', ["lint", "jsdoc:clean"], function () {
 gulp.task('jsdoc:clean', function () {
     return gulp.src([paths.jsdoc], { read: false })
         .pipe(clean());
+});
+
+gulp.task('jsdoc:deploy', function () {
+    return gulp.src('./dist/jsdoc/medium/**/*')
+        .pipe(deploy({remoteUrl:"https://github.com/mediumorg/medium"}));
 });
