@@ -67,14 +67,14 @@ define(["knockout", "knockout-projections", "module/pipes"], function (ko, proje
         return function (tag) {
             tagprocessor.tags.push(tag);
             tagprocessor.tagIndex[tag.id] = tag;
-        }
+        };
     };
 
 
     var SubTagIndexer = function(tagprocessor){
         return function (tag) {
             tagprocessor.subTags[tag.id] = tag.tags;
-        }
+        };
     };
 
     /**

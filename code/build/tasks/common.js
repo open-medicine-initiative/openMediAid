@@ -16,10 +16,7 @@ gulp.task('clean', function () {
         .pipe(clean());
 });
 
-gulp.task('clean:jsdoc', function () {
-    return gulp.src([paths.jsdoc], { read: false })
-        .pipe(clean());
-});
+
 
 gulp.task('lint', function () {
     gulp.src(paths.modules + '**/*.js')

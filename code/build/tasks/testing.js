@@ -61,7 +61,7 @@ function getYargs() {
     return args;
 }
 
-gulp.task('test',['ls:gentests'], function () {
+gulp.task('test', function () {
     var yargs = getYargs();
 
     if (yargs.argv.b) {
@@ -73,6 +73,8 @@ gulp.task('test',['ls:gentests'], function () {
 });
 
 
+/* Livescript is not used for testing anymore. Remaining tests are
+migrated to coffeescript.
 
 gulp.task('ls:gentests',['ls:base', 'ls:data'], function() {
     return gulp.src(TestSuites.livescript())
@@ -89,7 +91,7 @@ gulp.task('ls:data', function() {
         .pipe(gulpLiveScript({bare: true}))
         .pipe(gulp.dest(paths.testgen + "data"));
 });
-
+ */
 
 /**
  * Run all tests with mocha and generate coverage report for listed
@@ -99,7 +101,7 @@ gulp.task('test:coverage', function () {
     gulp.src(determineTestSet(), {read: false})
         .pipe(mocha({reporter: 'list'}))
         .pipe(blanket({
-            instrument: Finder.Finder.in(paths.modules).findFiles('*.js'),
+            instrument: Finder.in(paths.modules).findFiles('*.js'),
             // where to render the reporter output
             captureFile: 'build/reports/test-coverage.html',
             // the report format
