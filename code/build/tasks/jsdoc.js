@@ -8,7 +8,7 @@ var settings = require('./settings'),
 
 function jsDocFiles(){
     var jsModules = Finder.from(paths.modules).findFiles('*.js');
-    var jsDocReadme = "./build/jsdoc/README.md";
+    var jsDocReadme = "../README.md";
     jsModules.push(jsDocReadme);
     return jsModules;
 }
@@ -20,13 +20,12 @@ gulp.task('jsdoc', ["lint", "jsdoc:clean"], function () {
     };
     var template = {
         path: 'ink-docstrap',
-        systemName: 'Medsys',
-        footer: "This footer text needs to be replaced...",
+        systemName: 'Medium',
         copyright: "Medium",
         navType: "vertical",
         theme: "superhero",
         linenums: true,
-        collapseSymbols: false,
+        collapseSymbols: true,
         inverseNav: false
     }
     var options =   {
