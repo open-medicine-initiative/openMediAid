@@ -9,18 +9,24 @@ module.exports = function (config) {
         frameworks: [
             'requirejs',
             'mocha', // https://www.npmjs.org/package/karma-mocha
-            'sinon-chai' ],
+            // register sinon and chai asserts
+            // such that no require() calls are necessary in test files
+            'sinon-chai'
+        ],
 
 
         // list of files / patterns to load [in the browser?]
         files: [
+            // config files
             'src/app/require.config.js',
             'test/require.config.js',
             'test/SpecRunner.karma.js',
+            // test files
             { pattern: 'test/**/*.coffee', included: false },
+            { pattern: 'test/**/*.js', included: false },
+            // source files to watch for changes
             { pattern: 'src/**/*.js', included: false },
-            { pattern: 'src/**/*.html', included: false },
-            { pattern: 'test/**/*.js', included: false }
+            { pattern: 'src/**/*.html', included: false }
         ],
 
 
@@ -34,10 +40,16 @@ module.exports = function (config) {
             '**/*.coffee': ['coffee']
         },
 
-
-        client: {
-            mocha: {
-                ui: 'bdd' // this is default of the mocha adapter
+        // configure the coffeescript preprocessor
+        coffeePreprocessor: {
+            // options passed to the coffee compiler
+            options: {
+                bare: true,
+                sourceMap: true
+            },
+            // transforming the filenames
+            transformPath: function(path) {
+                return path.replace(/\.coffee$/, '.js');
             }
         },
 
@@ -52,10 +64,8 @@ module.exports = function (config) {
         // web server port
         port: 9876,
 
-
         // enable / disable colors in the output (reporters and logs)
         colors: true,
-
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
@@ -76,7 +86,6 @@ module.exports = function (config) {
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
         singleRun: false
-
 
     });
 };

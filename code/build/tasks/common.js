@@ -12,9 +12,12 @@ gulp.task('prepare', ["clean"], function (callback) {
 });
 
 gulp.task('clean', function () {
-    // return the stream to allow gulp to watch this task for completion
-    // otherwise
     return gulp.src([paths.target, paths.jsdoc, paths.reports], { read: false })
+        .pipe(clean());
+});
+
+gulp.task('clean:jsdoc', function () {
+    return gulp.src([paths.jsdoc], { read: false })
         .pipe(clean());
 });
 

@@ -7,14 +7,34 @@
     <!-- build:css -->
       <link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
       <link href="css/styles.css" rel="stylesheet">
+      <link href="bower_modules/w2ui/w2ui-1.4.2.css" rel="stylesheet">
     <!-- endbuild -->
     <!-- build:js -->
       <script src="app/require.config.js"></script>
       <script data-main="app/startup" src="bower_modules/requirejs/require.js"></script>
+      <script src="bower_modules/jquery/dist/jquery.js"></script>
+      <script src="bower_modules/w2ui/w2ui-1.4.2.js"></script>
     <!-- endbuild -->
   </head>
   <body>
-    <nav-bar params="route: route"></nav-bar>
-    <div id="page" class="container" data-bind="component: { name: route().page, params: route }"></div>
+
+
+  <div id="layout" style="height: 400px"></div>
+
+  <script>
+      $('#layout').w2layout({
+          name: 'layout',
+          panels: [
+              { type: 'left', size: 200, resizable: true, style: 'background-color: #F5F6F7;', content: 'left' },
+              { type: 'main', style: 'background-color: #F5F6F7; padding: 5px;' },
+              { type: 'top', style: 'background-color: #F5F6F7; padding: 5px;' }
+          ]
+      });
+
+      w2ui['layout'].content('top', '<nav-bar params="route: route"></nav-bar>');
+      w2ui['layout'].content('main', '<div id="page" class="container" data-bind="component: { name: route().page, params: route }"></div>');
+
+  </script>
+
   </body>
 </html>

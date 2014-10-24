@@ -9,6 +9,8 @@
     "requirejs": "~2.1.11",
     "requirejs-text": "~2.0.10",
     "knockout": "~3.2.0",
-    "knockout-projections": "~1.1.0"
+    "knockout-projections": "~1.1.0",
+    "lodash": "~2.4.1",
+    "w2ui": "~1.4.2"
   }
 }

@@ -7,8 +7,16 @@ var uglify = require('gulp-uglify');
 var jsdoc = require("gulp-jsdoc");
 var browserify = require('browserify');
 var source = require("vinyl-source-stream");
+var Finder = require("fs-finder");
 
-gulp.task('jsdoc', ["lint", "clean"], function () {
+function jsDocFiles(){
+    var jsModules = Finder.from(paths.modules).findFiles('*.js')
+    var jsDocReadme = "./build/jsdoc/README.md";
+    jsModules.push(jsDocReadme);
+    return jsModules;
+}
+
+gulp.task('jsdoc', ["lint", "clean:jsdoc"], function () {
     var infos = {
         name: settings.pkgjson.name,
         plugins: ['plugins/markdown']
@@ -31,7 +39,7 @@ gulp.task('jsdoc', ["lint", "clean"], function () {
         outputSourceFiles: true
     };
 
-    gulp.src([paths.modules + "**/*.js", "./build/jsdoc/README.md"])
+    gulp.src(jsDocFiles())
         .pipe(jsdoc.parser(infos))
         .pipe(jsdoc.generator(paths.jsdoc, template, options));
 });
