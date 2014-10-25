@@ -1,6 +1,8 @@
 
 /**
- * This build file assembles all tasks and provides help about build usage.
+ * This is the root build file that assembles all tasks and provides help about build usage.
+ *
+ * ToDo: put examples here
  *
  */
 
@@ -15,7 +17,7 @@ var gulp = require('gulp'),
     gulpLiveScript = require('gulp-livescript'),
     watch = require('gulp-watch');
 
-// include build tasks
+// Include build tasks
 var opts = require('./build/tasks/settings').paths,
     common = require('./build/tasks/common'),
     testing = require('./build/tasks/testing'),
@@ -40,6 +42,8 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
         paths: {
             requireLib: 'bower_modules/requirejs/require'
         },
+        // Modules listed here will be loaded synchronously by the app at startup
+        // --> available immediately
         include: [
             'requireLib',
             'components/nav-bar/nav-bar',
@@ -55,7 +59,7 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
         }
     });
 
-// Discovers all AMD dependencies, concatenates together all required .js files, minifies them
+// Discovers all AMD dependencies, concatenates all required .js files, minifies them
 gulp.task('js', function () {
     return rjs(requireJsOptimizerConfig)
         .pipe(uglify({ preserveComments: 'some' }))
@@ -73,16 +77,6 @@ gulp.task('css', function () {
         .pipe(gulp.dest('./dist/'));
 });
 
-//var watcher = gulp.watch('./test/**/*.ls', ['ls']);
-//watcher.on('change', function(event) {
-//    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-//});
-//gulp.task('ls', function() {
-//    return gulp.src('**/*.ls')
-//            .pipe(gulpLiveScript({bare: true}))
-//            .pipe(gulp.dest("test/components"));
-//
-//});
 
 // Copies index.html, replacing <script> and <link> tags to reference production URLs
 gulp.task('html', function() {

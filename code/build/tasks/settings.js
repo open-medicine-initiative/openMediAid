@@ -2,12 +2,13 @@ var settings={
     paths: {
         src: "./src/",
         modules: "./src/modules/",
+        components: "./src/components/",
         test: "./test/",
-        testgen: "./test-gen/",
+        gen: "./gen/",
         build: "./build/",
-        reports: "./dist/reports",
+        reports: "./gen/reports",
         target: "./dist/",
-        jsdoc: "./dist/jsdoc/"
+        jsdoc: "./gen/jsdoc/"
     },
     pkgjson:require("../../package.json")
 };

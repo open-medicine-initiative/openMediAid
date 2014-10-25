@@ -1,4 +1,4 @@
-var settings = require('./settings');
+var settings = require('./../../build/tasks/settings');
 var paths = settings.paths;
 var gulp = require('gulp');
 var rename = require('gulp-rename');

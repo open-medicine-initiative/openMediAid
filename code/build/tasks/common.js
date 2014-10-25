@@ -12,14 +12,17 @@ gulp.task('prepare', ["clean"], function (callback) {
 });
 
 gulp.task('clean', function () {
-    return gulp.src([paths.target, paths.jsdoc, paths.reports], { read: false })
+    return gulp.src([
+            paths.target,
+            paths.jsdoc,
+            paths.reports],
+            { read: false })
         .pipe(clean());
 });
 
 
-
 gulp.task('lint', function () {
-    gulp.src(paths.modules + '**/*.js')
+    gulp.src([paths.modules + '**/*.js',paths.components + '**/*.js'])
         .pipe(jshint())
         .pipe(jshint.reporter(jshintstylish))
         .pipe(jshint.reporter('fail'))
