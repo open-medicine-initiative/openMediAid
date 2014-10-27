@@ -1,4 +1,4 @@
-var settings = require('./settings'),
+var settings = require('./build.settings'),
     paths = settings.paths,
     gulp = require('gulp'),
     jsdoc = require("gulp-jsdoc"),

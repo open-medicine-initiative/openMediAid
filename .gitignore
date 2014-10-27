@@ -19,8 +19,9 @@ todos.txt
 
 # generated build artefacts #
 code/dist
-code/dist/jsdoc
-code/dist/reports
+code/gen
+code/gen/jsdoc
+code/gen/reports
 
 # generated test artefacts #
 code/test-gen

@@ -35,7 +35,7 @@
     "gulp-clean": ">=0.3.0",
     "gulp-jsdoc": ">=0.1.4",
     "gulp-mocha": ">=0.4.1",
-    "gulp-util": ">=2.2.14",
+    "gulp-util": "~3.0.1",
     "gulp-requirejs-bundler": "^0.1.1",
     "gulp-replace": ">=0.2.0",
     "gulp-plumber": ">=0.6.5",
@@ -54,7 +54,8 @@
     "mkdirp": ">=0.5.0",
     "JSONSelect": ">=0.4.0",
     "fs-finder": ">=1.8.0",
-    "gulp-gh-pages": "~0.4.0"
+    "gulp-gh-pages": "~0.4.0",
+    "gulp-coffee": "~2.2.0"
   },
   "engine": "node >= 0.10.25"
 }

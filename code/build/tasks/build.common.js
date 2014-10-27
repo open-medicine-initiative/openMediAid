@@ -2,7 +2,7 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var jshintstylish = require('jshint-stylish');
 var clean = require('gulp-clean');
-var paths = require('./settings').paths;
+var paths = require('./build.settings').paths;
 var mkdirp = require('mkdirp');
 
 gulp.task('prepare', ["clean"], function (callback) {
@@ -13,7 +13,7 @@ gulp.task('prepare', ["clean"], function (callback) {
 
 gulp.task('clean', function () {
     return gulp.src([
-            paths.target,
+            paths.dist,
             paths.jsdoc,
             paths.reports],
             { read: false })

@@ -18,11 +18,10 @@ var gulp = require('gulp'),
     watch = require('gulp-watch');
 
 // Include build tasks
-var opts = require('./build/tasks/settings').paths,
-    common = require('./build/tasks/common'),
-    testing = require('./build/tasks/testing'),
-    build = require('./build/tasks/build')
-    jsdoc = require('./build/tasks/jsdoc');
+var paths = require('./build/tasks/build.settings').paths,
+    common = require('./build/tasks/build.common'),
+    testing = require('./build/tasks/build.testing'),
+    jsdoc = require('./build/tasks/build.jsdoc');
 
 // Node modules
 var fs = require('fs'),
@@ -94,7 +93,7 @@ gulp.task('default', ['build-app'], function(callback) {
     console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
 });
 
-gulp.task('build-app', ['html', 'js', 'css'], function(callback) {
+gulp.task('build-app', ['html', 'js', 'css', 'lint'], function(callback) {
     callback();
     console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
 });

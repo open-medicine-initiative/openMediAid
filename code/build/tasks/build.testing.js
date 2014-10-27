@@ -1,4 +1,4 @@
-var paths = require('./settings').paths;
+var paths = require('./build.settings').paths;
 var gulp = require('gulp');
 var yargs = require('yargs');
 var _mocha = require('gulp-mocha');
@@ -16,7 +16,7 @@ var Finder = require("fs-finder");
 
 var TestSuites = {
     livescript: function(){return Finder.in(paths.test).findFiles('*.ls')},
-    all: function(){return Finder.in(paths.testgen).findFiles('test.*.js')},
+    all: function(){return Finder.from("./test-gen").findFiles('*.js')},
     perf: function(){return Finder.in(paths.test).findFiles('perf.*.js')}
 };
 
@@ -93,17 +93,32 @@ gulp.task('ls:data', function() {
 });
  */
 
+
+// TODO: make this work
+// --> http://stackoverflow.com/questions/20473614/mocha-requirejs-amd-testing
+var coffee = require('gulp-coffee');
+var gutil = require('gulp-util');
+
+gulp.task('test:coffee', function() {
+    gulp.src('./test/**/*.coffee')
+        .pipe(coffee({bare: true}).on('error', gutil.log))
+        .pipe(gulp.dest('./test-gen/'))
+});
+
+
 /**
  * Run all tests with mocha and generate coverage report for listed
  * modules.
  */
 gulp.task('test:coverage', function () {
-    gulp.src(determineTestSet(), {read: false})
+    var tests = determineTestSet(getYargs());
+    console.log(tests);
+    gulp.src(tests, {read: false})
         .pipe(mocha({reporter: 'list'}))
         .pipe(blanket({
             instrument: Finder.in(paths.modules).findFiles('*.js'),
             // where to render the reporter output
-            captureFile: 'build/reports/test-coverage.html',
+            captureFile: 'gen/test-coverage.html',
             // the report format
             reporter: 'html-cov'
         }));

@@ -7,7 +7,7 @@ var settings={
         gen: "./gen/",
         build: "./build/",
         reports: "./gen/reports",
-        target: "./dist/",
+        dist: "./dist/",
         jsdoc: "./gen/jsdoc/"
     },
     pkgjson:require("../../package.json")
