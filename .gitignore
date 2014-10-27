@@ -31,4 +31,7 @@ code/node_modules
 code/src/bower_modules
 code/test/bower_modules
 
+# external libs
+code/src/lib
+
 

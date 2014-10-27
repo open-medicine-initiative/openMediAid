@@ -13,9 +13,17 @@ var require = {
         "module":               "modules",
         "data":                 "data",
         "lodash":               "bower_modules/lodash/dist/lodash",
-        "tagprocessor":         "modules/tagprocessor"
+        "tagprocessor":         "modules/tagprocessor",
+        "jsclass":              "bower_modules/jsclass/source/core",
+        "jqxko":                "lib/jqwidgets/jqxknockout",
+        "jqxall":                "lib/jqwidgets/jqx-all"
     },
     shim: {
-        "bootstrap": { deps: ["jquery"] }
+        "bootstrap": { deps: ["jquery"] },
+        "jqxall": {
+            // see http://www.jqwidgets.com/jquery-widgets-documentation/documentation/requirejs/requirejs_tutorial_knockout.htm
+            export: "$",
+            deps: ["jquery", "knockout"]
+        }
     }
 };

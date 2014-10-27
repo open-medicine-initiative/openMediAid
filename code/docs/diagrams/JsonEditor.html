@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" href="../../node_modules/jointjs/dist/joint.css" />
+    <script src="../../node_modules/jointjs/dist/joint.js"></script>
+    <script src="../../node_modules/jointjs/dist/joint.shapes.uml.js"></script>
+
+
+</head>
+<body>
+
+<div id="paper"></div>
+
+<script type="application/javascript" >
+
+    var graph = new joint.dia.Graph;
+
+    var paper = new joint.dia.Paper({
+        el: $('#paper'),
+        width: 800,
+        height: 600,
+        gridSize: 1,
+        model: graph
+    });
+
+
+    var uml = joint.shapes.uml;
+
+    var classes = {
+
+        node: new uml.Class({
+            stereotypes:['Named'],
+            position: { x:300  , y: 50 },
+            size: { width: 240, height: 100 },
+            name: 'Node',
+            attributes: { nodes : "[Node]"},
+            methods: ['+ setDateOfBirth(dob: Date): Void','+ getAgeAsDays(): Numeric']
+        }),
+
+        attribute: new uml.Class({
+            stereotypes:['Named'],
+            position: { x:300  , y: 300 },
+            size: { width: 240, height: 100 },
+            name: 'Attribute',
+            attributes: {firstName: 'String'},
+            methods: ['+ setName(first: String, last: String): Void','+ getName(): String']
+        })
+
+    };
+
+    _.each(classes, function(c) { graph.addCell(c); });
+
+    var relations = [
+        new uml.Aggregation({
+            source: { id: classes.node.id },
+            target: { id: classes.attribute.id },
+            labels: [
+                { position: 0, attrs: { text: { text: '1' } }},
+                { position: 50, attrs: { text: { text: 'multiple' } }},
+                { position: 100, attrs: { text: { text: '0..*' } }}
+            ]
+        }),
+        new uml.Aggregation({ source: { id: classes.node.id }, target: { id: classes.node.id }})
+    ];
+
+    _.each(relations, function(r) { graph.addCell(r); });
+
+</script>
+</body>
+</html>

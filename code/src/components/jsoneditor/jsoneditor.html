@@ -1,0 +1,11 @@
+<ul data-bind="foreach: nodes">
+    <li>
+
+    <span data-bind="
+    text: name,
+    tooltip: { delay: { show: 500, hide: 10 } }"></span>
+
+        <div data-bind="component: { name: 'node', params: $data }, visible: isVisible"></div>
+    </li>
+</ul>
+

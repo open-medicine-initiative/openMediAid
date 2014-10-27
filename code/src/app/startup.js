@@ -1,5 +1,17 @@
-define(['jquery', 'knockout', './router', 'bootstrap', 'knockout-projections'], function ($, ko, router) {
+define([
+    'jquery',
+    'knockout',
+    './router',
+    'bootstrap',
+    'knockout-projections',
+    'jqxall'
+], function ($, ko, router) {
+    var root = (typeof window === "object" && window) || this;
+    root.ko = ko;
+    $("#document").ready(function () {
+        // Start the application
 
+    });
     // Components can be packaged as AMD modules, such as the following:
     ko.components.register('nav-bar', { require: 'components/nav-bar/nav-bar' });
     ko.components.register('home-page', { require: 'components/home-page/home' });
@@ -9,14 +21,17 @@ define(['jquery', 'knockout', './router', 'bootstrap', 'knockout-projections'], 
     ko.components.register('about-page', {
         template: { require: 'text!components/about-page/about.html' }
     });
-    ko.components.register('tags', { require: 'components/tags/taghierarchy' });
-    ko.components.register('tag', {
-        template: {require: "text!components/tags/tag.html"}
+
+//    ko.components.register('tags', { require: 'components/tags/taghierarchy' });
+//    ko.components.register('tag', {
+//        template: {require: "text!components/tags/tag.html"}
+//    });
+
+    ko.components.register('jsoneditor', { require: 'components/jsoneditor/jsoneditor' });
+    ko.components.register('node', {
+        template: {require: "text!components/jsoneditor/jsoneditor.html"}
     });
 
-
-    // [Scaffolded component registrations will be inserted here. To retain this feature, don't remove this comment.]
-
-    // Start the application
     ko.applyBindings({ route: router.currentRoute });
+
 });
