@@ -1,24 +1,26 @@
-define(["knockout", "knockout-projections", "module/pipes"], function (ko, projections, Pipeline) {
+define( ["knockout", "knockout-projections", "module/pipes", "module/stages"], function ( ko, projections, Pipeline, stages ) {
     /**
      * @constructor
      */
-    function TagProcessor() {
-        this.tags = [];
-        this.tagIndex = {};
-        this.subTags = {};
+    function TagProcessor () {
+        this.tags = new stages.Memorizer();
+        this.tagIndex = new stages.Indexer();
+        this.subTags = new stages.Indexer( {target : function ( tag ) {
+            return tag.tags;
+        }} );
         this.stages = {
-            JsonToTag:JsonToTag,
-            TagIndexer: TagIndexer(this),
-            SubTagIndexer: SubTagIndexer(this)
+            JsonToTag : JsonToTag,
+            TagIndexer : this.tagIndex.asStage(),
+            SubTagIndexer : this.subTags.asStage()
         };
     }
 
-    TagProcessor.prototype.pipeline = function(){
-         var _pipe = new Pipeline()
-             .stage(this.stages.SubTagIndexer)
-             .stage(this.stages.JsonToTag)
-             .stage(this.stages.TagIndexer);
-         return _pipe;
+    TagProcessor.prototype.pipeline = function () {
+        var _pipe = new Pipeline()
+            .stage( this.stages.SubTagIndexer )
+            .stage( this.stages.JsonToTag )
+            .stage( this.stages.TagIndexer );
+        return _pipe;
     };
 
     /**
@@ -26,36 +28,36 @@ define(["knockout", "knockout-projections", "module/pipes"], function (ko, proje
      * @memberof TagProcessor
      * @param tag - The source for the tag
      */
-    var JsonToTag = function (src) {
+    var JsonToTag = function ( src ) {
         // TODO: maybe this is an independent function and not a member
-        var _tags = ko.observableArray([]);
-        var _selfVisible = ko.observable(true);
-        var _visibleChildren = _tags.filter(function (tag) {
+        var _tags = ko.observableArray( [] );
+        var _selfVisible = ko.observable( true );
+        var _visibleChildren = _tags.filter( function ( tag ) {
             return tag.isVisible();
-        });
-        var isVisible = ko.computed(function () {
+        } );
+        var isVisible = ko.computed( function () {
             return _selfVisible() || _visibleChildren().length > 0;
-        });
+        } );
 
         var result = {
-            id: src.id,
-            name: src.name,
-            selfVisible: _selfVisible,
-            isVisible: isVisible,
-            tags: _tags,
-            addTag: function (src) {
-                this.tags.push(src);
+            id : src.id,
+            name : src.name,
+            selfVisible : _selfVisible,
+            isVisible : isVisible,
+            tags : _tags,
+            addTag : function ( src ) {
+                this.tags.push( src );
             },
-            addChild: function(){
-                this.tags.push(JsonToTag({id: 11, name: "skin", tags:[]}));
+            addChild : function () {
+                this.tags.push( JsonToTag( {id : 11, name : "skin", tags : []} ) );
             },
-            hidden: function () {
-                this.selfVisible(false);
+            hidden : function () {
+                this.selfVisible( false );
             },
-            visible: function () {
-                this.selfVisible(true);
+            visible : function () {
+                this.selfVisible( true );
             },
-            visibleChildren: function () {
+            visibleChildren : function () {
                 return _visibleChildren().length;
             }
         };
@@ -63,35 +65,22 @@ define(["knockout", "knockout-projections", "module/pipes"], function (ko, proje
     };
 
 
-    var TagIndexer = function(tagprocessor){
-        return function (tag) {
-            tagprocessor.tags.push(tag);
-            tagprocessor.tagIndex[tag.id] = tag;
-        };
-    };
-
-
-    var SubTagIndexer = function(tagprocessor){
-        return function (tag) {
-            tagprocessor.subTags[tag.id] = tag.tags;
-        };
-    };
-
     /**
      * @instance
      * @memberof TagProcessor
      * @param tag
      */
     TagProcessor.prototype.buildHierarchy = function () {
-        var tagprocessor = this;
-        tagprocessor.tags.forEach(function (tag) {
-            tagprocessor.subTags[tag.id].forEach(function (subTagId) {
-                var subTag = tagprocessor.tagIndex[subTagId];
-                if(!subTag)console.log("Required tag not defined");
-                else tag.addTag(subTag);
-            });
-        });
+        var self = this;
+
+        self.tags.memory.forEach( function ( tag ) {
+            self.subTags.index[tag.id].forEach( function ( subTagId ) {
+                var subTag = self.tagIndex.index[subTagId];
+                if ( !subTag )console.log( "Required tag not defined" );
+                else tag.addTag( subTag );
+            } );
+        } );
     };
 
     return TagProcessor;
-});
+} );

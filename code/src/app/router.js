@@ -1,18 +1,12 @@
 define(["knockout", "crossroads", "hasher"], function(ko, crossroads, hasher) {
 
-    // This module configures crossroads.js, a routing library. If you prefer, you
-    // can use any other routing library (or none at all) as Knockout is designed to
-    // compose cleanly with external libraries.
-    //
-    // You *don't* have to follow the pattern established here (each route entry
-    // specifies a 'page', which is a Knockout component) - there's nothing built into
-    // Knockout that requires or even knows about this technique. It's just one of
-    // many possible ways of setting up client-side routes.
+    // This module configures crossroads.js(each route entry
+    // specifies a 'page', which is a Knockout component)
 
     return new Router({
         routes: [
             { url: '',          params: { page: 'home-page' } },
-            { url: 'editor',          params: { page: 'jsoneditor' } },
+            { url: 'editor',    params: { page: 'jsoneditor' } },
             { url: 'about',     params: { page: 'about-page' } }
         ]
     });

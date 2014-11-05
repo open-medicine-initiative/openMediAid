@@ -14,16 +14,9 @@ var require = {
         "data":                 "data",
         "lodash":               "bower_modules/lodash/dist/lodash",
         "tagprocessor":         "modules/tagprocessor",
-        "jsclass":              "bower_modules/jsclass/source/core",
-        "jqxko":                "lib/jqwidgets/jqxknockout",
-        "jqxall":                "lib/jqwidgets/jqx-all"
+        "jsclass":              "bower_modules/jsclass/source/core"
     },
     shim: {
-        "bootstrap": { deps: ["jquery"] },
-        "jqxall": {
-            // see http://www.jqwidgets.com/jquery-widgets-documentation/documentation/requirejs/requirejs_tutorial_knockout.htm
-            export: "$",
-            deps: ["jquery", "knockout"]
-        }
+        "bootstrap": { deps: ["jquery"] }
     }
 };

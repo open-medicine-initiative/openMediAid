@@ -19,6 +19,7 @@ This page provides information mainly for developers. If you don't know what the
 * Install gulp and bower globally: `npm install -g gulp bower`
 * Install npm dependencies: `npm install`
 * Install bower dependencies: `bower install`
+* Install karma client globally for convenience `sudo npm install -g karma-cli`
 * Run default build `gulp`
 
 [WIP]
