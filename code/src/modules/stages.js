@@ -2,13 +2,18 @@
  * Descibe me
  * @module stages
  */
-define( function ( jsclass ) {
+define( function ( ) {
 
     /**
-     * Describe me
+     * Constructs an indexer with the given options
+     *
+     * @classdesc An indexer will build a document that references each element by their id. If the element does not
+     * provide an id, it will be silently ignored
+     *
      * @constructor module:stages.Indexer
      * @param {Object} options
-     * @param {Function} [options.target=element] - Accessor for the property that should be indexed. The default value is a function that returns the element itself.
+     * @param {Function} [options.target= (elem) -> return elem] - Accessor for the property that should be indexed.
+     * The default value is a function that returns the element itself.
      */
     function Indexer ( options ) {
         this.index = {};

@@ -1,3 +1,5 @@
+var paths = require('./build/tasks/build.settings' ).paths;
+// see http://karma-runner.github.io/0.10/config/configuration-file.html
 module.exports = function (config) {
     config.set({
 
@@ -37,7 +39,8 @@ module.exports = function (config) {
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
             '**/require.config.js': ['requireglobal'],
-            '**/*.coffee': ['coffee']
+            '**/*.coffee': ['coffee'],
+            'src/modules/**/*.js': ['coverage']
         },
 
         // configure the coffeescript preprocessor
@@ -58,7 +61,20 @@ module.exports = function (config) {
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
         // https://github.com/karma-runner/karma-coverage
-        reporters: ['progress'],
+        reporters: ['progress', 'coverage'],
+
+        coverageReporter: {
+            // specify a common output directory
+            dir: paths.reports + '/coverage',
+            reporters: [
+                // reporters not supporting the `file` property
+                { type: 'html', subdir: 'report-html' }
+                //{ type: 'lcov', subdir: 'report-lcov' },
+                // reporters supporting the `file` property, use `subdir` to directly
+                // output them in the `dir` directory
+                //{ type: 'cobertura', subdir: '.', file: 'cobertura.txt' },
+            ]
+        },
 
 
         // web server port
@@ -74,18 +90,20 @@ module.exports = function (config) {
 
         // enable / disable watching file and executing tests whenever any file changes
         autoWatch: true,
+        autoWatchBatchDelay : 2000,  // but wait at least 2 seconds after each change before rerunning
+        // Continuous Integration mode
+        // if true, Karma captures browsers, runs the tests and exits
+        singleRun: false,
 
+        reportSlowerThan: 500,
 
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: [
-            'Chrome' // export CHROME_BIN=/usr/bin/chromium-browser
-        ],
+            //'Chrome' // export CHROME_BIN=/usr/bin/chromium-browser
+            'PhantomJS'
+        ]
 
-
-        // Continuous Integration mode
-        // if true, Karma captures browsers, runs the tests and exits
-        singleRun: false
 
     });
 };

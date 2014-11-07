@@ -94,18 +94,6 @@ gulp.task('ls:data', function() {
  */
 
 
-// TODO: make this work
-// --> http://stackoverflow.com/questions/20473614/mocha-requirejs-amd-testing
-var coffee = require('gulp-coffee');
-var gutil = require('gulp-util');
-
-gulp.task('test:coffee', function() {
-    gulp.src('./test/**/*.coffee')
-        .pipe(coffee({bare: true}).on('error', gutil.log))
-        .pipe(gulp.dest('./test-gen/'))
-});
-
-
 /**
  * Run all tests with mocha and generate coverage report for listed
  * modules.
