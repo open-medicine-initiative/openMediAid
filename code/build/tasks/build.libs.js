@@ -8,22 +8,10 @@ var gulp = require( 'gulp' ),
     Finder = require( "fs-finder" ),
     source = require("vinyl-source-stream");
 
-gulp.task( 'prepare', ["clean"], function ( callback ) {
-    mkdirp( paths.reports, function ( err ) {
-        callback();
-    } );
-} );
-
-gulp.task( 'clean', function () {
-    return gulp.src( [
-            paths.dist,
-            paths.jsdoc,
-            paths.reports],
-        { read : false } )
-        .pipe( clean() );
-} );
-
-gulp.task( 'dep:cocktail', function ( callback ) {
+/**
+ * rebundle node module cocktail to use in requirejs environment
+ */
+gulp.task( 'lib:cocktail', function ( ) {
     return browserify({standalone:"cocktail"})
         .add("./node_modules/cocktail/lib/cocktail.js")
         .bundle()
@@ -32,13 +20,8 @@ gulp.task( 'dep:cocktail', function ( callback ) {
         .pipe( gulp.dest( "./src/lib/cocktails" ) );
 } );
 
-
-gulp.task( 'lint', function () {
-    gulp.src( [paths.modules + '**/*.js', paths.components + '**/*.js'] )
-        .pipe( jshint() )
-        .pipe( jshint.reporter( jshintstylish ) )
-        .pipe( jshint.reporter( 'fail' ) )
-    ;
+gulp.task( 'libs', ['lib:cocktail'], function ( done ) {
+    done();
 } );
 
 module.exports = {};

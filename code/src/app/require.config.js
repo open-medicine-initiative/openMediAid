@@ -2,21 +2,30 @@
 var require = {
     baseUrl: ".",
     paths: {
-        "bootstrap":            "bower_modules/components-bootstrap/js/bootstrap.min",
-        "crossroads":           "bower_modules/crossroads/dist/crossroads.min",
-        "hasher":               "bower_modules/hasher/dist/js/hasher.min",
-        "jquery":               "bower_modules/jquery/dist/jquery",
-        "knockout":             "bower_modules/knockout/dist/knockout",
-        "knockout-projections": "bower_modules/knockout-projections/dist/knockout-projections",
-        "signals":              "bower_modules/js-signals/dist/signals.min",
-        "text":                 "bower_modules/requirejs-text/text",
+        "bootstrap":            "lib/components-bootstrap/js/bootstrap.min",
+        "crossroads":           "lib/crossroads/dist/crossroads.min",
+        "hasher":               "lib/hasher/dist/js/hasher.min",
+        "jquery":               "lib/jquery/dist/jquery",
+        "knockout":             "lib/knockout/dist/knockout",
+        "knockout-projections": "lib/knockout-projections/dist/knockout-projections",
+        "knockout-dict":        "lib/knockout-dict/ko.observableDictionary",
+        "signals":              "lib/js-signals/dist/signals.min",
+        "text":                 "lib/requirejs-text/text",
+        "lodash":               "lib/lodash/dist/lodash",
+        "underscore":           "lib/underscore/underscore",
+        "cocktail":             "lib/cocktails/cocktail",
+        "taffy":                "lib/taffy/taffy",
         "module":               "modules",
         "data":                 "data",
-        "lodash":               "bower_modules/lodash/dist/lodash",
         "tagprocessor":         "modules/tagprocessor",
-        "jsclass":              "bower_modules/jsclass/source/core"
+        "typo":                 "modules/types/typo",
+        "pipeline":             "modules/pipes",
+        "assembly":             "modules/stages",
+        "editor.Node":          "components/jsoneditor/json.editor.Node"
     },
     shim: {
-        "bootstrap": { deps: ["jquery"] }
+        // load jQuery before bootstrap
+        "bootstrap": { deps: ["jquery"] },
+        "knockout-projections": { deps: ["knockout"] }
     }
 };

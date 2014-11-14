@@ -5,39 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>test-scaffold</title>
     <!-- build:css -->
-      <link href="bower_modules/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
+      <link href="lib/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
       <link href="css/styles.css" rel="stylesheet">
-      <link href="bower_modules/w2ui/w2ui-1.4.2.css" rel="stylesheet">
     <!-- endbuild -->
     <!-- build:js -->
       <script src="app/require.config.js"></script>
-      <script data-main="app/startup" src="bower_modules/requirejs/require.js"></script>
-      <script src="bower_modules/jquery/dist/jquery.js"></script>
-      <script src="bower_modules/w2ui/w2ui-1.4.2.js"></script>
+      <script data-main="app/startup" src="lib/requirejs/require.js"></script>
+      <script src="lib/jquery/dist/jquery.js"></script>
     <!-- endbuild -->
-
-      <link rel="stylesheet" href="lib/jqwidgets/styles/jqx.base.css" type="text/css" />
 
   </head>
   <body>
-
-
-  <div id="layout" style="height: 400px"></div>
-
-  <script>
-      $('#layout').w2layout({
-          name: 'layout',
-          panels: [
-              { type: 'left', size: 200, resizable: true, style: 'background-color: #F5F6F7;', content: 'left' },
-              { type: 'main', style: 'background-color: #F5F6F7; padding: 5px;' },
-              { type: 'top', style: 'background-color: #F5F6F7; padding: 5px;' }
-          ]
-      });
-
-      w2ui['layout'].content('top', '<nav-bar params="route: route"></nav-bar>');
-      w2ui['layout'].content('main', '<div id="page" class="container" data-bind="component: { name: route().page, params: route }"></div>');
-
-  </script>
+  <nav-bar params="route: route"></nav-bar>
+  <div class="container voffset5">
+      <div class="row">
+          <div class="col-md-12"></div>
+      </div>
+      <div class="row">
+          <div class="col-md-4">Search bar goes heredfdsffdsadfffffff
+          fdsfadf
+          fdsfas
+          dfds</div>
+          <div class="col-md-8">submenue might go here</div>
+      </div>
+      <div class="row">
+          <div class="col-md-4">tree</div>
+          <div class="col-md-8"><div id="page" class="container" data-bind="component: { name: route().page, params: route }" /></div>
+      </div>
+      <div class="row">
+          <div class="col-md-12">Footer</div>
+      </div>
+  </div>
 
   </body>
 </html>

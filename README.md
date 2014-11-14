@@ -1,8 +1,6 @@
 Medium - Social Healthshare
 ======
-> [Medium](https://github.com/mediumorg/medium/wiki) is a crowd-sourced, open medicine platform aiming to help patients find appropriate diagnoses and effective treatments more quickly. Based on the comparison of medical records it identifies progress made by individuals and distributes their discoveries to users with similar profiles. 
-
-> Statistical information extracted from large sets of profiles is combined with established medical knowledge in order to generate suggestions about causes for symptoms and possible treatments.  
+> Medium is a [crowd-sourced](Crowdsourcing), non-profit, open medicine platform aiming to guide patients and doctors in their search for case-specific medical information in order to speed up the process of finding appropriate diagnoses and effective treatments.  
 
 This page provides information mainly for developers. If you don't know what the [goal](https://github.com/mediumorg/medium/wiki/How-it-works) of this project is, [how it works](https://github.com/mediumorg/medium/wiki/How-it-works) and how to contribute please be referred to the [wiki](https://github.com/mediumorg/medium/wiki)
 
@@ -30,15 +28,16 @@ This page provides information mainly for developers. If you don't know what the
 
 
 ## Project layout
-
-* /build
-  * /jsdoc
-  * /tasks
-* /src
-  * /app
-  * /components
-* /test
-* /dist
+* /code
+  * /build
+    * /jsdoc
+    * /tasks
+  * /src
+    * /app
+    * /components
+  * /test
+  * /dist
+* /concepts
 
 [WIP]
 

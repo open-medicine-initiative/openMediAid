@@ -8,20 +8,21 @@
 
 // Gulp and plugins
 var gulp = require('gulp'),
-    rjs = require('gulp-requirejs-bundler'),
+    requirejs = require('gulp-requirejs-bundler'),
     concat = require('gulp-concat'),
     clean = require('gulp-clean'),
     replace = require('gulp-replace'),
     uglify = require('gulp-uglify'),
     htmlreplace = require('gulp-html-replace'),
-    gulpLiveScript = require('gulp-livescript'),
+    //gulpLiveScript = require('gulp-livescript'),
     watch = require('gulp-watch');
 
 // Include build tasks
 var paths = require('./build/tasks/build.settings').paths,
     common = require('./build/tasks/build.common'),
     testing = require('./build/tasks/build.testing'),
-    jsdoc = require('./build/tasks/build.jsdoc');
+    documentation = require('./build/tasks/build.documentation' ),
+    libs = require('./build/tasks/build.libs' );
 
 // Node modules
 var fs = require('fs'),
@@ -39,7 +40,7 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
         baseUrl: './src',
         name: 'app/startup',
         paths: {
-            requireLib: 'bower_modules/requirejs/require'
+            requireLib: 'lib/requirejs/require'
         },
         // Modules listed here will be loaded synchronously by the app at startup
         // --> available immediately
@@ -60,18 +61,20 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
 
 // Discovers all AMD dependencies, concatenates all required .js files, minifies them
 gulp.task('js', function () {
-    return rjs(requireJsOptimizerConfig)
+    return requirejs(requireJsOptimizerConfig)
         .pipe(uglify({ preserveComments: 'some' }))
         .pipe(gulp.dest('./dist/'));
 });
 
 // Concatenates CSS files, rewrites relative paths to Bootstrap fonts, copies Bootstrap fonts
 gulp.task('css', function () {
-    var bootstrapCss = gulp.src('src/bower_modules/components-bootstrap/css/bootstrap.min.css')
+    var theme = 'lumen'; // TODO: make this configurable
+
+    var bootstrapCss = gulp.src('src/lib/components-bootstrap/css/bootstrap.min.css')
             .pipe(replace(/url\((')?\.\.\/fonts\//g, 'url($1fonts/')),
         appCss = gulp.src('src/css/*.css'),
         combinedCss = es.concat(bootstrapCss, appCss).pipe(concat('css.css')),
-        fontFiles = gulp.src('./src/bower_modules/components-bootstrap/fonts/*', { base: './src/bower_modules/components-bootstrap/' });
+        fontFiles = gulp.src('./src/lib/components-bootstrap/fonts/*', { base: './src/lib/components-bootstrap/' });
     return es.concat(combinedCss, fontFiles)
         .pipe(gulp.dest('./dist/'));
 });
