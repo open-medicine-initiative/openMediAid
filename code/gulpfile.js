@@ -22,7 +22,8 @@ var paths = require('./build/tasks/build.settings').paths,
     common = require('./build/tasks/build.common'),
     testing = require('./build/tasks/build.testing'),
     documentation = require('./build/tasks/build.documentation' ),
-    libs = require('./build/tasks/build.libs' );
+    libs = require('./build/tasks/build.libs' ),
+    qa = require('./build/tasks/build.qa' );
 
 // Node modules
 var fs = require('fs'),
@@ -91,12 +92,16 @@ gulp.task('html', function() {
 });
 
 
-gulp.task('default', ['build-app'], function(callback) {
+gulp.task('default', ['build-app-dev'], function(done) {
+    done();
+});
+
+gulp.task('build-app-prod', ['html', 'js', 'css', 'lint'], function(callback) {
     callback();
     console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
 });
 
-gulp.task('build-app', ['html', 'js', 'css', 'lint'], function(callback) {
+gulp.task('build-app-dev', ['html', 'js', 'css'], function(callback) {
     callback();
     console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
 });

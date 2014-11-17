@@ -1,4 +1,4 @@
-define(["lodash"], function (_) {
+define(['lodash'], function (_) {
 
     /**
      * @name Pipeline

@@ -56,7 +56,9 @@
     "JSONSelect": ">=0.4.0",
     "fs-finder": ">=1.8.0",
     "karma-coverage": "~0.2.6",
-    "karma-phantomjs-launcher": "~0.1.4"
+    "karma-phantomjs-launcher": "~0.1.4",
+    "gulp-complexity": "~0.3.0",
+    "gulp-plato": "~1.0.1"
   },
   "engine": "node >= 0.10.25"
 }

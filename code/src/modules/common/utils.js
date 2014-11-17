@@ -10,9 +10,10 @@ define([], function(){
      */
     function ValueRef(root, path){
         path = path.split(".");
+        // traverse up to the second last
         for(var i = 0; i < path.length - 1 ; i++){
-            root = root[path[i]];  //TODO: handle undefined
-            if(!root){
+            root = root[path[i]];
+            if(!root){ // if undefined
                 return {
                     set: function (value){
                         throw new Error("Unbound value ref")
