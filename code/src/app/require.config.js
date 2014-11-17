@@ -20,6 +20,8 @@ var require = {
         "tagprocessor":         "modules/tagprocessor",
         "typo":                 "modules/types/typo",
         "pipeline":             "modules/pipes",
+        "mbassy":             "modules/mbassy",
+        "utils":             "modules/common/utils",
         "assembly":             "modules/stages",
         "editor.Node":          "components/jsoneditor/json.editor.Node"
     },
