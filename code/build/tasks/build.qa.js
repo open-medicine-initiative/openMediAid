@@ -56,7 +56,7 @@ gulp.task( 'qa:complexity', function () {
 
 gulp.task( 'qa:plato', function () {
     return gulp.src( codebase.modules() )
-        .pipe( plato( './gen/reports/plato', {
+        .pipe( plato( paths.reports + 'plato', {
             jshint : {
                 options : jsHintsStrict
             },
@@ -75,7 +75,7 @@ gulp.task( 'qa:plato', function () {
 } );
 
 gulp.task( 'qa:lint', function () {
-    gulp.src( [paths.modules + '**/*.js', paths.components + '**/*.js'] )
+    return gulp.src( [paths.modules + '**/*.js', paths.components + '**/*.js'] )
         .pipe( jshint(jsHintsStrict) )
         .pipe( jshint.reporter( jshintstylish ) )
         .pipe( jshint.reporter( 'fail' ) )

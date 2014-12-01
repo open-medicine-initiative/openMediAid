@@ -23,6 +23,7 @@ var paths = require('./build/tasks/build.settings').paths,
     testing = require('./build/tasks/build.testing'),
     documentation = require('./build/tasks/build.documentation' ),
     libs = require('./build/tasks/build.libs' ),
+    site = require('./build/tasks/build.site' ),
     qa = require('./build/tasks/build.qa' );
 
 // Node modules
@@ -64,7 +65,7 @@ var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require
 gulp.task('js', function () {
     return requirejs(requireJsOptimizerConfig)
         .pipe(uglify({ preserveComments: 'some' }))
-        .pipe(gulp.dest('./dist/'));
+        .pipe(gulp.dest(paths.dist));
 });
 
 // Concatenates CSS files, rewrites relative paths to Bootstrap fonts, copies Bootstrap fonts
@@ -77,7 +78,7 @@ gulp.task('css', function () {
         combinedCss = es.concat(bootstrapCss, appCss).pipe(concat('css.css')),
         fontFiles = gulp.src('./src/lib/components-bootstrap/fonts/*', { base: './src/lib/components-bootstrap/' });
     return es.concat(combinedCss, fontFiles)
-        .pipe(gulp.dest('./dist/'));
+        .pipe(gulp.dest(paths.dist));
 });
 
 
@@ -88,7 +89,7 @@ gulp.task('html', function() {
             'css': 'css.css',
             'js': 'scripts.js'
         }))
-        .pipe(gulp.dest('./dist/'));
+        .pipe(gulp.dest(paths.dist));
 });
 
 
@@ -96,14 +97,14 @@ gulp.task('default', ['build-app-dev'], function(done) {
     done();
 });
 
-gulp.task('build-app-prod', ['html', 'js', 'css', 'lint'], function(callback) {
+gulp.task('build-app-prod', ['html', 'js', 'css', 'qa:lint'], function(callback) {
     callback();
-    console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
+    console.log('\nPlaced optimized files in ' + chalk.magenta(paths.dist + '\n'));
 });
 
 gulp.task('build-app-dev', ['html', 'js', 'css'], function(callback) {
     callback();
-    console.log('\nPlaced optimized files in ' + chalk.magenta('dist/\n'));
+    console.log('\nPlaced optimized files in ' + chalk.magenta(paths.dist + '\n'));
 });
 
 

@@ -25,6 +25,7 @@ module.exports = function (config) {
             'test/SpecRunner.karma.js',
             // test files
             { pattern: 'test/**/*.coffee', included: false },
+            { pattern: 'test/**/*.ls', included: false },
             { pattern: 'test/**/*.js', included: false },
             // source files to watch for changes
             { pattern: 'src/**/*.js', included: false },
@@ -40,6 +41,7 @@ module.exports = function (config) {
         preprocessors: {
             '**/require.config.js': ['requireglobal'],
             '**/*.coffee': ['coffee'],
+            '**/*.ls': ['live'],
             'src/modules/**/*.js': ['coverage']
         },
 
@@ -52,7 +54,18 @@ module.exports = function (config) {
             },
             // transforming the filenames
             transformPath: function(path) {
-                return path.replace(/\.coffee$/, '.js');
+                return path.replace(/\.coffee/, '.js');
+            }
+        },
+
+        livePreprocessor: {
+            // options passed to the live compiler
+            options: {
+                bare: true
+            },
+            // transforming the filenames
+            transformPath: function(path) {
+                return path.replace(/\.ls$/, '.js');
             }
         },
 

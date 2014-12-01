@@ -18,18 +18,12 @@
 todos.txt
 
 # generated build artefacts #
-code/dist
-code/gen
-code/gen/jsdoc
-code/gen/reports
-
-# generated test artefacts #
-code/test-gen
+code/_dist
+code/_site
+code/_gen
 
 # package manager #
 code/node_modules
-code/src/bower_modules
-code/test/bower_modules
 
 # external libs
 code/src/lib

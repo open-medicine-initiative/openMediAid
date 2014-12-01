@@ -58,7 +58,8 @@
     "karma-coverage": "~0.2.6",
     "karma-phantomjs-launcher": "~0.1.4",
     "gulp-complexity": "~0.3.0",
-    "gulp-plato": "~1.0.1"
+    "gulp-plato": "~1.0.1",
+    "karma-live-preprocessor": "~0.2.2"
   },
   "engine": "node >= 0.10.25"
 }

@@ -1,4 +1,8 @@
-define( ["knockout", "knockout-projections", "module/pipes", "module/stages"], function ( ko, projections, Pipeline, stages ) {
+define( [
+    "knockout",
+    "knockout-projections",
+    "module/pipes",
+    "module/stages"], function ( ko, projections, Pipeline, stages ) {
     /**
      * @constructor
      */

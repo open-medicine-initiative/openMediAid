@@ -13,7 +13,7 @@ function jsDocFiles(){
     return jsModules;
 }
 
-gulp.task('jsdoc', ["lint", "jsdoc:clean"], function () {
+gulp.task('jsdoc', ["jsdoc:clean"], function () {
     var infos = {
         name: settings.pkgjson.name,
         plugins: ['plugins/markdown']
@@ -35,7 +35,7 @@ gulp.task('jsdoc', ["lint", "jsdoc:clean"], function () {
         outputSourceFiles: true
     };
 
-    gulp.src(jsDocFiles())
+    return gulp.src(jsDocFiles())
         .pipe(jsdoc.parser(infos))
         .pipe(jsdoc.generator(paths.jsdoc, template, options));
 });
@@ -43,9 +43,4 @@ gulp.task('jsdoc', ["lint", "jsdoc:clean"], function () {
 gulp.task('jsdoc:clean', function () {
     return gulp.src([paths.jsdoc], { read: false })
         .pipe(clean());
-});
-
-gulp.task('jsdoc:deploy', function () {
-    return gulp.src('./dist/jsdoc/medium/**/*')
-        .pipe(deploy({remoteUrl:"https://github.com/mediumorg/medium"}));
 });

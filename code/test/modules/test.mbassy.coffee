@@ -11,12 +11,11 @@ define ['mbassy'], (MBassy)->
         expect(messagebus.channel('ROOT').parents() ) .to.be.empty
 
     describe '# subscription to channels', ->
-      messagebus = new MBassy();
+      messagebus = new MBassy()
       it 'with simple id', ->
         channelOne = messagebus .channel 'channelOne'
         expect(channelOne.isEmpty() ) .to.be.true
-        subscription = channelOne.subscribe (message) ->
-          return message
+        subscription = channelOne.subscribe (message) -> message
         expect(channelOne.isEmpty() ) .to.be.false
         expect(subscription) .not.to.equal undefined
         channelOne.unsubscribe subscription
