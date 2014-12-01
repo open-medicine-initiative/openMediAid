@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Plato - JavaScript Introspection</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!--[if lt IE 9]>
+  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
+  <script>
+    var __options = {"flags":{"complexity":{"maxcost":100,"maxsize":100,"minmi":70,"maxcyc":4,"maxcycden":4,"maxhd":12,"maxhv":100,"maxhe":151,"trycatch":true,"newmi":true},"jshint":{"options":{"bitwise":true,"curly":false,"eqeqeq":true,"forin":true,"immed":true,"newcap":true,"noarg":true,"noempty":true,"quotmark":"single","undef":true,"unused":"strict","trailing":true,"maxparams":15,"maxdepth":4,"maxstatements":25,"maxcomplexity":5,"maxlen":120,"browser":true,"jquery":true,"devel":true,"white":true,"indent":4,"predef":["_","describe","beforeEach","module","define","it","expect"]}}}}
+  </script>
+
+  <link href="assets/css/vendor/bootstrap.css" rel="stylesheet">
+  <link href="assets/css/vendor/font-awesome.css" rel="stylesheet">
+  <link href="assets/css/vendor/morris.css" rel="stylesheet">
+  <link href="assets/css/plato.css" rel="stylesheet">
+  <link href="assets/css/plato-display.css" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="container">
+    <h1>JavaScript Source Analysis</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="reportBlock lineCount">
+                <div class="reportContent">
+                    <small class="chart-label">Total / Average Lines</small>
+                    <h1>586 / 58</h1>
+                </div>
+                <div id="chart_historical_sloc" class="chart js-chart"></div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="reportBlock maintainability">
+                <div class="reportContent">
+                    <small class="chart-label">Average Maintainability</small>
+                    <h1>78.98</h1>
+                </div>
+                <div id="chart_historical_maint" class="chart js-chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="reportBlock maintainabilityList">
+                <h2 class="reportTitle">Worst Maintainability Scores</h2>
+                <ul class="list-unstyled">
+
+                    <li>
+                        <strong>100 score</strong>
+                        <small>types/typedefs.js</small>
+                    </li>
+
+                    <li>
+                        <strong>81 score</strong>
+                        <small>talents/TLogger.js</small>
+                    </li>
+
+                    <li>
+                        <strong>79 score</strong>
+                        <small>talents/TErrorCollector.js</small>
+                    </li>
+
+                    <li>
+                        <strong>78 score</strong>
+                        <small>stages.js</small>
+                    </li>
+
+                    <li>
+                        <strong>78 score</strong>
+                        <small>pipes.js</small>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="reportBlock locList">
+                <h2 class="reportTitle">Largest Files</h2>
+                <ul class="list-unstyled">
+
+                    <li>
+                        <strong>97 lines</strong>
+                        <small>mbassy.js</small>
+                    </li>
+
+                    <li>
+                        <strong>90 lines</strong>
+                        <small>pipes.js</small>
+                    </li>
+
+                    <li>
+                        <strong>90 lines</strong>
+                        <small>tagprocessor.js</small>
+                    </li>
+
+                    <li>
+                        <strong>79 lines</strong>
+                        <small>common/utils.js</small>
+                    </li>
+
+                    <li>
+                        <strong>58 lines</strong>
+                        <small>stages.js</small>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<script type="text/javascript" src="assets/scripts/bundles/core-bundle.js"></script>
+<script type="text/javascript" src="report.js"></script>
+<script type="text/javascript" src="report.history.js"></script>
+<script type="text/javascript" src="assets/scripts/plato-display.js"></script>
+
+</body>
+</html>
