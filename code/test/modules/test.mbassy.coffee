@@ -1,4 +1,4 @@
-define ['mbassy'], (MBassy)->
+define ['mbassy', 'mocha-cakes'], (MBassy)->
   describe 'MBassy ', ->
 
     describe '# construction', ->

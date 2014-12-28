@@ -22,7 +22,7 @@ var paths = require('./build/tasks/build.settings').paths,
     common = require('./build/tasks/build.common'),
     testing = require('./build/tasks/build.testing'),
     documentation = require('./build/tasks/build.documentation' ),
-    libs = require('./build/tasks/build.libs' ),
+    libs = require('./build/tasks/build.dependencies' ),
     site = require('./build/tasks/build.site' ),
     qa = require('./build/tasks/build.qa' );
 

@@ -17,8 +17,11 @@ module.exports = function (config) {
         ],
 
 
-        // list of files / patterns to load [in the browser?]
+        // list of files / patterns to load
+        // see http://karma-runner.github.io/0.10/config/files.html
         files: [
+            //'node_modules/mocha-cakes/node_modules/coffee-script/register.js',
+            'node_modules/mocha-cakes/cakes-bundle.js',
             // config files
             'src/app/require.config.js',
             'test/require.config.js',
