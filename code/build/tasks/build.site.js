@@ -29,5 +29,5 @@ gulp.task( 'site:assemble', function () {
 
 gulp.task( 'site:deploy', function () {
     return gulp.src( paths.site + '**/*' )
-        .pipe( deploy( {remoteUrl : "https://github.com/mediumorg/medium"} ) )
+        .pipe( deploy( {remoteUrl : "https://github.com/open-medicine-association/OpenMed"} ) )
 } );

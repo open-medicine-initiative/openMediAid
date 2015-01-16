@@ -20,8 +20,8 @@ gulp.task('jsdoc', ["jsdoc:clean"], function () {
     };
     var template = {
         path: 'ink-docstrap',
-        systemName: 'Medium',
-        copyright: "Medium",
+        systemName: 'OpenMed',
+        copyright: "OpenMed",
         navType: "vertical",
         theme: "superhero",
         linenums: true,
