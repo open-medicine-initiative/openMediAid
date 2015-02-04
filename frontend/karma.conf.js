@@ -1,4 +1,4 @@
-var paths = require('./build/tasks/build.settings' ).paths;
+var paths = require('./build/tasks/build.project' ).paths;
 // see http://karma-runner.github.io/0.10/config/configuration-file.html
 module.exports = function (config) {
     config.set({
@@ -11,17 +11,13 @@ module.exports = function (config) {
         frameworks: [
             'requirejs',
             'mocha', // https://www.npmjs.org/package/karma-mocha
-            // register sinon and chai asserts
-            // such that no require() calls are necessary in test files
-            'sinon-chai'
+            'chai' // integration with chai to avoid require() calls in each test
         ],
 
 
         // list of files / patterns to load
         // see http://karma-runner.github.io/0.10/config/files.html
         files: [
-            //'node_modules/mocha-cakes/node_modules/coffee-script/register.js',
-            'node_modules/mocha-cakes/cakes-bundle.js',
             // config files
             'src/app/require.config.js',
             'test/require.config.js',

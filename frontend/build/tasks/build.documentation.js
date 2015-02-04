@@ -1,5 +1,5 @@
-var settings = require('./build.settings'),
-    paths = settings.paths,
+var project = require('./build.project'),
+    paths = project.paths,
     gulp = require('gulp'),
     jsdoc = require("gulp-jsdoc"),
     Finder = require("fs-finder"),
@@ -7,7 +7,7 @@ var settings = require('./build.settings'),
     deploy = require('gulp-gh-pages');
 
 function jsDocFiles(){
-    var jsModules = Finder.from(paths.modules).findFiles('*.js');
+    var jsModules = project.codebase.modules();
     var jsDocReadme = "../README.md";
     jsModules.push(jsDocReadme);
     return jsModules;
@@ -15,7 +15,7 @@ function jsDocFiles(){
 
 gulp.task('jsdoc', ["jsdoc:clean"], function () {
     var infos = {
-        name: settings.pkgjson.name,
+        name: project.pkgjson.name,
         plugins: ['plugins/markdown']
     };
     var template = {
@@ -27,7 +27,7 @@ gulp.task('jsdoc', ["jsdoc:clean"], function () {
         linenums: true,
         collapseSymbols: true,
         inverseNav: false
-    }
+    };
     var options =   {
         'private': false,
         monospaceLinks: false,
@@ -42,5 +42,5 @@ gulp.task('jsdoc', ["jsdoc:clean"], function () {
 
 gulp.task('jsdoc:clean', function () {
     return gulp.src([paths.jsdoc], { read: false })
-        .pipe(clean());
+        .pipe(clean({force:true}));
 });

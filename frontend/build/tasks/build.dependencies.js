@@ -1,6 +1,6 @@
 var gulp = require( 'gulp' ),
     clean = require( 'gulp-clean' ),
-    paths = require( './build.settings' ).paths,
+    paths = require( './build.project' ).paths,
     mkdirp = require( 'mkdirp' ),
     browserify = require( 'browserify' ),
     Finder = require( "fs-finder" ),

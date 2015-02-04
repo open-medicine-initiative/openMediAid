@@ -17,15 +17,14 @@
 # personal #
 todos.txt
 
-# generated build artefacts #
-code/_dist
-code/_site
-code/_gen
+# generated and bundled artefacts #
+target
+target/**/*
 
-# package manager #
-code/node_modules
+# npm dependencies #
+frontend/node_modules
 
-# external libs
-code/src/lib
+# external libs (managed by bower and gulp) #
+frontend/src/lib
 
 

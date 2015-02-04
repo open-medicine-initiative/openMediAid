@@ -1,1 +1,0 @@
-Screenshots of signup and data collection process on patientslikeme.com

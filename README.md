@@ -28,16 +28,7 @@ This page provides information mainly for developers. If you don't know what the
 
 
 ## Project layout
-* /code
-  * /build
-    * /jsdoc
-    * /tasks
-  * /src
-    * /app
-    * /components
-  * /test
-  * /dist
-* /concepts
+[WIP]
 
 ## Architecture
 
@@ -62,7 +53,7 @@ The general pattern for commit messages is
 
 intents: fix,feature,refactor,doc,misc
 
-components: build,app,medmod
+components: build,app
 
 Examples `fix(doc): corrected typo in ...` `feature(build): added lint validation for build scripts`
 

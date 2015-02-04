@@ -10,13 +10,3 @@ describe 'karma tests with chai', ->
   it 'should expose the Chai should property', ->
     1 .should .not .equal 2
     should .exist 123
-
-describe 'karma tests with sinon', ->
-
-  it 'can spy on objects', ->
-    foo = bar: ->
-    sinon.spy foo, 'bar'
-
-    foo.bar 'baz'
-
-    foo.bar.should.have.been.calledWith 'baz'

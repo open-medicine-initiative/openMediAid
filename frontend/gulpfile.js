@@ -18,7 +18,7 @@ var gulp = require('gulp'),
     watch = require('gulp-watch');
 
 // Include build tasks
-var paths = require('./build/tasks/build.settings').paths,
+var paths = require('./build/tasks/build.project').paths,
     common = require('./build/tasks/build.common'),
     testing = require('./build/tasks/build.testing'),
     documentation = require('./build/tasks/build.documentation' ),
