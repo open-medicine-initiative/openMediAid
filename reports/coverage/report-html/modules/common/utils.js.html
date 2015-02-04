@@ -295,7 +295,8 @@
 77
 78
 79
-80</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+80
+81</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -352,6 +353,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -374,91 +376,92 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">define([], function(){
-    /**
-     * Create a wrapper around a property that can be passed around to read or write
-     * the underlying value.
-     *
-     * @param root
-     * @param path
-     * @returns {{set: Function, get: Function}}
-     * @constructor
-     */
-    function ValueRef(root, path){
-        path = path.split(".");
-        // traverse up to the second last
-        for(var i = 0; i &lt; path.length - 1 ; i++){
-            root = root[path[i]];
-            <span class="missing-if-branch" title="if path not taken" >I</span>if(!root){ // if undefined
-<span class="cstat-no" title="statement not covered" >                return {</span>
-                    set: <span class="fstat-no" title="function not covered" >function (value){</span>
-<span class="cstat-no" title="statement not covered" >                        throw new Error("Unbound value ref")</span>
-                    },
-                    get: <span class="fstat-no" title="function not covered" >function (){</span>
-<span class="cstat-no" title="statement not covered" >                        return undefined;</span>
-                    }
-                }
-            }
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">define( [], function () {
+  /**
+   * Create a wrapper around a property that can be passed around to read or write
+   * the underlying value.
+   *
+   * @param root
+   * @param path
+   * @returns {{set: Function, get: Function}}
+   * @constructor
+   */
+  function ValueRef ( root, path ) {
+    path = path.split( "." );
+    // traverse up to the second last
+    for ( var i = 0; i &lt; path.length - 1; i++ ) {
+      root = root[path[i]];
+      <span class="missing-if-branch" title="if path not taken" >I</span>if ( !root ) { // if undefined
+<span class="cstat-no" title="statement not covered" >        return {</span>
+          set : <span class="fstat-no" title="function not covered" >function ( value ) {</span>
+<span class="cstat-no" title="statement not covered" >            throw new Error( "Unbound value ref" )</span>
+          },
+          get : <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >            return undefined;</span>
+          }
         }
-        var property = path[path.length -1];
-        return {
-            set: <span class="fstat-no" title="function not covered" >function (value){</span>
-<span class="cstat-no" title="statement not covered" >                root[property] = value;</span>
-            },
-            get: function (){
-                return root[property];
-            }
-        };
+      }
     }
-&nbsp;
-    function value(path){
-        return {from: function(source){
-            return ValueRef(source, path);
-        }};
-    }
-&nbsp;
-    /**
-     * Map the observables (internal state) to getter/setter of target
-     * such that it can easily operate on its private observable state
-     * without caring about the values actually being observables
-     *
-     * @param state
-     * @param target
-     */
-<span class="fstat-no" title="function not covered" >    function addProperties(state, target){</span>
-<span class="cstat-no" title="statement not covered" >        for(var property in state.observables){</span>
-            // enclose in function to get closure context right
-<span class="cstat-no" title="statement not covered" >            mapProperty(state.observables[property], target, state.properties[property]);</span>
-        }
-    }
-<span class="fstat-no" title="function not covered" >    function mapProperty(observable, target, property){</span>
-<span class="cstat-no" title="statement not covered" >        Object.defineProperty(target, property.name, {</span>
-            get : <span class="fstat-no" title="function not covered" >function () {</span>
-<span class="cstat-no" title="statement not covered" >                return observable();</span>
-            },
-            set : <span class="fstat-no" title="function not covered" >function (val) {</span>
-<span class="cstat-no" title="statement not covered" >                if(property.editable)<span class="cstat-no" title="statement not covered" >observable(val);</span></span>
-            }
-        });
-    }
-&nbsp;
-&nbsp;
-    var utils = {
-        ValueRef: ValueRef,
-        orb:{
-            value: value,
-            addProperties: addProperties
-        }
+    var property = path[path.length - 1];
+    return {
+      set : <span class="fstat-no" title="function not covered" >function ( value ) {</span>
+<span class="cstat-no" title="statement not covered" >        root[property] = value;</span>
+      },
+      get : function () {
+        return root[property];
+      }
     };
+  }
 &nbsp;
-    return utils;
-});
+  function value ( path ) {
+    return {from : function ( source ) {
+      return ValueRef( source, path );
+    }};
+  }
+&nbsp;
+  /**
+   * Map the observables (internal state) to getter/setter of target
+   * such that it can easily operate on its private observable state
+   * without caring about the values actually being observables
+   *
+   * @param state
+   * @param target
+   */
+<span class="fstat-no" title="function not covered" >  function addProperties ( state, target ) {</span>
+<span class="cstat-no" title="statement not covered" >    for ( var property in state.observables ) {</span>
+      // enclose in function to get closure context right
+<span class="cstat-no" title="statement not covered" >      mapProperty( state.observables[property], target, state.properties[property] );</span>
+    }
+  }
+&nbsp;
+<span class="fstat-no" title="function not covered" >  function mapProperty ( observable, target, property ) {</span>
+<span class="cstat-no" title="statement not covered" >    Object.defineProperty( target, property.name, {</span>
+      get : <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        return observable();</span>
+      },
+      set : <span class="fstat-no" title="function not covered" >function ( val ) {</span>
+<span class="cstat-no" title="statement not covered" >        if ( property.editable )<span class="cstat-no" title="statement not covered" >observable( val );</span></span>
+      }
+    } );
+  }
+&nbsp;
+&nbsp;
+  var utils = {
+    ValueRef : ValueRef,
+    orb : {
+      value : value,
+      addProperties : addProperties
+    }
+  };
+&nbsp;
+  return utils;
+} );
 &nbsp;</pre></td></tr>
 </table></pre>
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 04 2015 16:39:00 GMT+0100 (CET)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 04 2015 19:15:08 GMT+0100 (CET)</div>
 </div>
 
 <script src="../../prettify.js"></script>

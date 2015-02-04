@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>OpenMed Source: common/catalogues.js</title>
+	<title>OpenMed Index</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -73,72 +73,88 @@
 	<div class="row-fluid">
 
 		
-			<div class="span12">
-				
+		<div class="span8">
+			
 				<div id="main">
 					
 
 
-		<h1 class="page-title">Source: common/catalogues.js</h1>
-    
+	
+	<span class="page-title">Index</span>
+	
+	
+
+
+
+    <h3>OpenMed </h3>
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
     <section>
-        <article>
-            <pre class="sunlight-highlight-javascript linenums">// use taffy db for internal representation of catalogue data
-var db = require("../../lib/taffy");
-
-/**
- * The catalogue module exposes objects that wrap the raw catalogue data to provide
- * search functionality.
- *
- * @module catalogues
- */
-var Catalogues = {
-    Symptoms:Symptoms
-};
-
-/**
- * @class The symptoms catalogue can be used to lookup symptoms by their names, synonyms or tags
- * @constructor
- * @param {object} data - The raw symptoms catalogue data as parsed from its json representation
- *
- */
-function Symptoms(data){
-    var _tags = db(data.tags);
-    var _symptoms = db(data.entries);
-    var self = this;
-    /**
-     * Find a set of symptoms by a given search criteria.
-     *
-     * @example &lt;caption>Find matching exact value&lt;/caption>
-     * // returns 2
-     *
-     * @param criteria
-     * @returns {*}
-     */
-     this.find = function (criteria){
-        var matching = _tags(criteria); // filter tags by given criteria
-        var joined = matching.join(_symptoms, function(left, right){
-            return left.symptoms.indexOf(right.sid) != -1;
-        });
-        //var result = joined.select("sid", "cName");
-         var result = joined.map(function (record,recordnumber) {
-             return {sid: record.sid , cName : record.cName};
-         });
-        return result;
-    };
-
-    // this is the publicly exposed object
-    return {
-       find: self.find
-    };
-}
-
-// export such that require(file).catalogue works
-module.exports = Catalogues;
-
-</pre>
-        </article>
+        <article><h1 id="openmed-social-healthshare">OpenMed - Social Healthshare</h1>
+<blockquote>
+<p>OpenMed is a crowd-sourced, non-profit, open medicine platform aiming to guide patients and doctors in their search for case-specific medical information.  </p>
+</blockquote>
+<p>This page provides information mainly for developers. For more information about the project please visit <a href="https://www.open-med.net">OpenMed</a></p>
+<h1 id="development">Development</h1>
+<p>[WIP]</p>
+<h2 id="setup">Setup</h2>
+<ul>
+<li>Install node.js and npm</li>
+<li>Checkout repository: <code>git clone https://github.com/open-medicine-initiative/OpenMed</code></li>
+<li>Change to the root directory of the frontend code: <code>cd frontend</code></li>
+<li>Ensure that <code>node</code> points to <code>nodejs</code> for compatibility of some plugins (set a symlink)</li>
+<li>Install gulp and bower globally: <code>sudo npm install -g gulp bower</code></li>
+<li>Install npm dependencies: <code>npm install</code></li>
+<li>Install bower dependencies: <code>bower install</code></li>
+<li>Install karma client globally for convenience <code>sudo npm install -g karma-cli</code></li>
+<li>Run default build <code>gulp</code></li>
+</ul>
+<p>[WIP]</p>
+<h2 id="the-build-process">The build process</h2>
+<p>[WIP]</p>
+<h2 id="project-layout">Project layout</h2>
+<p>[WIP]</p>
+<h2 id="architecture">Architecture</h2>
+<ul>
+<li>Date centric application with JSON being the primary data (exchange) format</li>
+<li>Data is exposed by REST-API</li>
+<li>Data is transformed into mutable state that is acted upon by models and other types of components</li>
+<li>Contracts for behaviour are defined as traits/talents with cocktail.js</li>
+<li>Contracts for data are defined using json schema and some appropriate validator</li>
+<li>Keep depth (nested structures) of data items minimal -&gt; strive for local, small scoped, flat structures</li>
+<li>Support for nested/recursive structures is added on client side</li>
+<li>Composable pipes and filters (pipelines) are used to transform data (e.g. wiring up nested structures) and attach behavior (talents)</li>
+<li>Pipelines are configured explicitly using fluent interface and mapped to resources using pattern matching of url routes</li>
+</ul>
+<p>[WIP]</p>
+<h2 id="conventions">Conventions</h2>
+<h3 id="commit-messages">Commit messages</h3>
+<p>The general pattern for commit messages is
+<code>intent(component): message</code></p>
+<p>intents: fix,feature,refactor,doc,misc</p>
+<p>components: build,app</p>
+<p>Examples <code>fix(doc): corrected typo in ...</code> <code>feature(build): added lint validation for build scripts</code></p>
+<h3 id="license">License</h3>
+<p>Something like MIT but has yet to be decided</p>
+</article>
     </section>
+
+
 
 
 
@@ -157,11 +173,15 @@ module.exports = Catalogues;
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Wed Feb 04 2015 16:38:59 GMT+0100 (CET) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Wed Feb 04 2015 19:15:08 GMT+0100 (CET) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>
 
+			
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
 			
 			<br clear="both">
 		</div>

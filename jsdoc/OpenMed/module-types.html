@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>OpenMed Source: tagprocessor.js</title>
+	<title>OpenMed Module: types</title>
 
 	<!--[if lt IE 9]>
 	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -73,109 +73,161 @@
 	<div class="row-fluid">
 
 		
-			<div class="span12">
-				
+		<div class="span8">
+			
 				<div id="main">
 					
 
 
-		<h1 class="page-title">Source: tagprocessor.js</h1>
+	<h1 class="page-title">Module: types</h1>
+<section>
+
+<header>
+    <h2>
+    types
+    </h2>
     
-    <section>
-        <article>
-            <pre class="sunlight-highlight-javascript linenums">define( [
-    "knockout",
-    "knockout-projections",
-    "module/pipes",
-    "module/stages"], function ( ko, projections, Pipeline, stages ) {
-    /**
-     * @constructor
-     */
-    function TagProcessor () {
-        this.tags = new stages.Memorizer();
-        this.tagIndex = new stages.Indexer();
-        this.subTags = new stages.Indexer( {target : function ( tag ) {
-            return tag.tags;
-        }} );
-        this.stages = {
-            JsonToTag : JsonToTag,
-            TagIndexer : this.tagIndex.asStage(),
-            SubTagIndexer : this.subTags.asStage()
-        };
-    }
+</header>
 
-    TagProcessor.prototype.pipeline = function () {
-        var _pipe = new Pipeline()
-            .stage( this.stages.SubTagIndexer )
-            .stage( this.stages.JsonToTag )
-            .stage( this.stages.TagIndexer );
-        return _pipe;
-    };
+<article>
+    <div class="container-overview">
+    
 
-    /**
-     * @instance
-     * @memberof TagProcessor
-     * @param tag - The source for the tag
-     */
-    var JsonToTag = function ( src ) {
-        // TODO: maybe this is an independent function and not a member
-        var _tags = ko.observableArray( [] );
-        var _selfVisible = ko.observable( true );
-        var _visibleChildren = _tags.filter( function ( tag ) {
-            return tag.isVisible();
-        } );
-        var isVisible = ko.computed( function () {
-            return _selfVisible() || _visibleChildren().length > 0;
-        } );
+    
+        
 
-        var result = {
-            id : src.id,
-            name : src.name,
-            selfVisible : _selfVisible,
-            isVisible : isVisible,
-            tags : _tags,
-            addTag : function ( src ) {
-                this.tags.push( src );
-            },
-            addChild : function () {
-                this.tags.push( JsonToTag( {id : 11, name : "skin", tags : []} ) );
-            },
-            hidden : function () {
-                this.selfVisible( false );
-            },
-            visible : function () {
-                this.selfVisible( true );
-            },
-            visibleChildren : function () {
-                return _visibleChildren().length;
-            }
-        };
-        return result;
-    };
+        
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="typedefs.js.html">types/typedefs.js</a>, <a href="typedefs.js.html#sunlight-1-line-1">line 1</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
 
 
-    /**
-     * @instance
-     * @memberof TagProcessor
-     * @param tag
-     */
-    TagProcessor.prototype.buildHierarchy = function () {
-        var self = this;
+        
+    
+    </div>
 
-        self.tags.memory.forEach( function ( tag ) {
-            self.subTags.index[tag.id].forEach( function ( subTagId ) {
-                var subTag = self.tagIndex.index[subTagId];
-                if ( !subTag )console.log( "Required tag not defined" );
-                else tag.addTag( subTag );
-            } );
-        } );
-    };
+    
 
-    return TagProcessor;
-} );</pre>
-        </article>
-    </section>
+    
 
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Type Definitions</h3>
+
+        <dl>
+                
+<dt>
+    <h4 class="name" id="Stage"><span class="type-signature"></span>Stage<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        <p>A stage is a function used as a single processing step within a pipeline</p>
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="typedefs.js.html">types/typedefs.js</a>, <a href="typedefs.js.html#sunlight-1-line-5">line 5</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+            </dl>
+    
+
+    
+</article>
+
+</section>
 
 
 
@@ -193,11 +245,15 @@
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.0-alpha5</a>
-		on Wed Feb 04 2015 16:38:59 GMT+0100 (CET) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Wed Feb 04 2015 19:15:08 GMT+0100 (CET) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>
 
+			
+			<div class="span3">
+				<div id="toc"></div>
+			</div>
 			
 			<br clear="both">
 		</div>

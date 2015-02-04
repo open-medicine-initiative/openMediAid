@@ -408,100 +408,100 @@
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">define(function ( ) {
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">define( function () {
 &nbsp;
-    function MBassy () {
-        this.root = new Channel( 'ROOT', undefined );
+  function MBassy () {
+    this.root = new Channel( 'ROOT', undefined );
+  }
+&nbsp;
+  MBassy.prototype.channel = function ( channelId ) {
+    if ( !channelId ) // empty or undefined channel ids can not be created
+      return undefined;
+    if ( channelId === 'ROOT' )
+      return this.root;
+    return this.root.channel( channelId );
+  };
+&nbsp;
+&nbsp;
+  function Channel ( id, parent ) {
+    this.id = id;
+    this.subscriptions = undefined;
+    this.channels = {};
+    this.parent = parent;
+    if ( parent )
+      parent.channels[id] = this;
+  }
+&nbsp;
+  Channel.prototype.subscribe = function ( handler ) {
+    this.subscriptions = new Subscription( this, this.subscriptions, handler );
+    return this.subscriptions;
+  };
+&nbsp;
+  Channel.prototype.parents = function () {
+    var parents = [],
+      curParent = this.parent;
+    while ( curParent ) {
+      parents.push( curParent );
+      curParent = curParent.parent;
     }
+    return parents;
+  };
 &nbsp;
-    MBassy.prototype.channel = function ( channelId ) {
-        if(!channelId) // empty or undefined channel ids can not be created
-            return undefined;
-        if (channelId === 'ROOT')
-            return this.root;
-        return this.root.channel(channelId);
-    };
+  Channel.prototype.isEmpty = function () {
+    return this.subscriptions === undefined;
+  };
 &nbsp;
-&nbsp;
-    function Channel ( id, parent ) {
-        this.id = id;
-        this.subscriptions = undefined;
-        this.channels = {};
-        this.parent = parent;
-        if(parent)
-            parent.channels[id] = this;
+  Channel.prototype.channel = function ( channelId ) {
+    var path = channelId.split( '.' ),
+      channel = this; // start with self
+    for ( var i = 0; i &lt; path.length; i++ ) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if ( channel.id === path[i] )
+<span class="cstat-no" title="statement not covered" >        return channel;</span>
+      <span class="missing-if-branch" title="else path not taken" >E</span>if ( channel.channels[path[i]] === undefined ) {
+        channel = new Channel( path[i], channel );
+      }
     }
-&nbsp;
-    Channel.prototype.subscribe = function ( handler ) {
-        this.subscriptions = new Subscription( this, this.subscriptions, handler );
-        return this.subscriptions;
-    };
-&nbsp;
-    Channel.prototype.parents = function ( ) {
-        var parents = [],
-            curParent = this.parent;
-        while(curParent){
-            parents.push(curParent);
-            curParent = curParent.parent;
-        }
-        return parents;
-    };
-&nbsp;
-    Channel.prototype.isEmpty = function () {
-        return this.subscriptions === undefined;
-    };
-&nbsp;
-    Channel.prototype.channel = function ( channelId ) {
-        var path = channelId.split( '.' ),
-            channel = this; // start with self
-        for ( var i = 0; i &lt; path.length; i++ ) {
-            <span class="missing-if-branch" title="if path not taken" >I</span>if ( channel.id === path[i] )
-<span class="cstat-no" title="statement not covered" >                return channel;</span>
-            <span class="missing-if-branch" title="else path not taken" >E</span>if ( channel.channels[path[i]] === undefined ) {
-                channel = new Channel( path[i], channel );
-            }
-        }
-        return channel;
-    };
+    return channel;
+  };
 &nbsp;
 &nbsp;
-    Channel.prototype.unsubscribe = function ( subscription ) {
-        // if is head
-        <span class="missing-if-branch" title="else path not taken" >E</span>if ( this.subscriptions === subscription ) {
-            this.subscriptions = subscription.next;
-        } else {
-            // otherwise just cut this subscription out of the list
-<span class="cstat-no" title="statement not covered" >            subscription.prev.next = this.next;</span>
-        }
-    };
-&nbsp;
-    Channel.prototype.publish = <span class="fstat-no" title="function not covered" >function ( message ) {</span>
-<span class="cstat-no" title="statement not covered" >        var current = this.subscriptions;</span>
-<span class="cstat-no" title="statement not covered" >        while ( current ) {</span>
-<span class="cstat-no" title="statement not covered" >            current.handle( message );</span>
-<span class="cstat-no" title="statement not covered" >            current = current.next;</span>
-        }
-    };
-&nbsp;
-    function Subscription ( channel, next, handler ) {
-        this.prev = undefined; // insertion at head will -&gt; no predecessor
-        this.next = next;
-        this.channel = channel;
-        this.handler = handler;
-        <span class="missing-if-branch" title="if path not taken" >I</span>if(next)
-<span class="cstat-no" title="statement not covered" >            next.prev = this;</span>
+  Channel.prototype.unsubscribe = function ( subscription ) {
+    // if is head
+    <span class="missing-if-branch" title="else path not taken" >E</span>if ( this.subscriptions === subscription ) {
+      this.subscriptions = subscription.next;
+    } else {
+      // otherwise just cut this subscription out of the list
+<span class="cstat-no" title="statement not covered" >      subscription.prev.next = this.next;</span>
     }
+  };
 &nbsp;
-    Subscription.prototype.unsubscribe = <span class="fstat-no" title="function not covered" >function () {</span>
-<span class="cstat-no" title="statement not covered" >        this.channel.unsubscribe( this );</span>
-    };
+  Channel.prototype.publish = <span class="fstat-no" title="function not covered" >function ( message ) {</span>
+<span class="cstat-no" title="statement not covered" >    var current = this.subscriptions;</span>
+<span class="cstat-no" title="statement not covered" >    while ( current ) {</span>
+<span class="cstat-no" title="statement not covered" >      current.handle( message );</span>
+<span class="cstat-no" title="statement not covered" >      current = current.next;</span>
+    }
+  };
 &nbsp;
-    Subscription.prototype.handle = <span class="fstat-no" title="function not covered" >function ( message ) {</span>
-<span class="cstat-no" title="statement not covered" >        this.handler( message );</span>
-    };
+  function Subscription ( channel, next, handler ) {
+    this.prev = undefined; // insertion at head will -&gt; no predecessor
+    this.next = next;
+    this.channel = channel;
+    this.handler = handler;
+    <span class="missing-if-branch" title="if path not taken" >I</span>if ( next )
+<span class="cstat-no" title="statement not covered" >      next.prev = this;</span>
+  }
+&nbsp;
+  Subscription.prototype.unsubscribe = <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >    this.channel.unsubscribe( this );</span>
+  };
+&nbsp;
+  Subscription.prototype.handle = <span class="fstat-no" title="function not covered" >function ( message ) {</span>
+<span class="cstat-no" title="statement not covered" >    this.handler( message );</span>
+  };
 &nbsp;
 &nbsp;
-    return MBassy;
+  return MBassy;
 &nbsp;
 &nbsp;
 } );</pre></td></tr>
@@ -509,7 +509,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 04 2015 16:39:00 GMT+0100 (CET)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 04 2015 19:15:08 GMT+0100 (CET)</div>
 </div>
 
 <script src="../prettify.js"></script>

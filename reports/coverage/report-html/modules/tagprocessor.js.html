@@ -395,100 +395,100 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">define( [
-    "knockout",
-    "knockout-projections",
-    "module/pipes",
-    "module/stages"], function ( ko, projections, Pipeline, stages ) {
-    /**
-     * @constructor
-     */
-    function TagProcessor () {
-        this.tags = new stages.Memorizer();
-        this.tagIndex = new stages.Indexer();
-        this.subTags = new stages.Indexer( {target : function ( tag ) {
-            return tag.tags;
-        }} );
-        this.stages = {
-            JsonToTag : JsonToTag,
-            TagIndexer : this.tagIndex.asStage(),
-            SubTagIndexer : this.subTags.asStage()
-        };
-    }
-&nbsp;
-    TagProcessor.prototype.pipeline = function () {
-        var _pipe = new Pipeline()
-            .stage( this.stages.SubTagIndexer )
-            .stage( this.stages.JsonToTag )
-            .stage( this.stages.TagIndexer );
-        return _pipe;
+  "knockout",
+  "knockout-projections",
+  "module/pipes",
+  "module/stages"], function ( ko, projections, Pipeline, stages ) {
+  /**
+   * @constructor
+   */
+  function TagProcessor () {
+    this.tags = new stages.Memorizer();
+    this.tagIndex = new stages.Indexer();
+    this.subTags = new stages.Indexer( {target : function ( tag ) {
+      return tag.tags;
+    }} );
+    this.stages = {
+      JsonToTag : JsonToTag,
+      TagIndexer : this.tagIndex.asStage(),
+      SubTagIndexer : this.subTags.asStage()
     };
+  }
 &nbsp;
-    /**
-     * @instance
-     * @memberof TagProcessor
-     * @param tag - The source for the tag
-     */
-    var JsonToTag = function ( src ) {
-        // TODO: maybe this is an independent function and not a member
-        var _tags = ko.observableArray( [] );
-        var _selfVisible = ko.observable( true );
-        var _visibleChildren = _tags.filter( function ( tag ) {
-            return tag.isVisible();
-        } );
-        var isVisible = ko.computed( function () {
-            return _selfVisible() || _visibleChildren().length &gt; 0;
-        } );
+  TagProcessor.prototype.pipeline = function () {
+    var _pipe = new Pipeline()
+      .stage( this.stages.SubTagIndexer )
+      .stage( this.stages.JsonToTag )
+      .stage( this.stages.TagIndexer );
+    return _pipe;
+  };
 &nbsp;
-        var result = {
-            id : src.id,
-            name : src.name,
-            selfVisible : _selfVisible,
-            isVisible : isVisible,
-            tags : _tags,
-            addTag : function ( src ) {
-                this.tags.push( src );
-            },
-            addChild : <span class="fstat-no" title="function not covered" >function () {</span>
-<span class="cstat-no" title="statement not covered" >                this.tags.push( JsonToTag( {id : 11, name : "skin", tags : []} ) );</span>
-            },
-            hidden : function () {
-                this.selfVisible( false );
-            },
-            visible : <span class="fstat-no" title="function not covered" >function () {</span>
-<span class="cstat-no" title="statement not covered" >                this.selfVisible( true );</span>
-            },
-            visibleChildren : function () {
-                return _visibleChildren().length;
-            }
-        };
-        return result;
+  /**
+   * @instance
+   * @memberof TagProcessor
+   * @param tag - The source for the tag
+   */
+  var JsonToTag = function ( src ) {
+    // TODO: maybe this is an independent function and not a member
+    var _tags = ko.observableArray( [] );
+    var _selfVisible = ko.observable( true );
+    var _visibleChildren = _tags.filter( function ( tag ) {
+      return tag.isVisible();
+    } );
+    var isVisible = ko.computed( function () {
+      return _selfVisible() || _visibleChildren().length &gt; 0;
+    } );
+&nbsp;
+    var result = {
+      id : src.id,
+      name : src.name,
+      selfVisible : _selfVisible,
+      isVisible : isVisible,
+      tags : _tags,
+      addTag : function ( src ) {
+        this.tags.push( src );
+      },
+      addChild : <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        this.tags.push( JsonToTag( {id : 11, name : "skin", tags : []} ) );</span>
+      },
+      hidden : function () {
+        this.selfVisible( false );
+      },
+      visible : <span class="fstat-no" title="function not covered" >function () {</span>
+<span class="cstat-no" title="statement not covered" >        this.selfVisible( true );</span>
+      },
+      visibleChildren : function () {
+        return _visibleChildren().length;
+      }
     };
+    return result;
+  };
 &nbsp;
 &nbsp;
-    /**
-     * @instance
-     * @memberof TagProcessor
-     * @param tag
-     */
-    TagProcessor.prototype.buildHierarchy = function () {
-        var self = this;
+  /**
+   * @instance
+   * @memberof TagProcessor
+   * @param tag
+   */
+  TagProcessor.prototype.buildHierarchy = function () {
+    var self = this;
 &nbsp;
-        self.tags.memory.forEach( <span class="fstat-no" title="function not covered" >function ( tag ) {</span>
-<span class="cstat-no" title="statement not covered" >            self.subTags.index[tag.id].forEach( <span class="fstat-no" title="function not covered" >function ( subTagId ) {</span></span>
-<span class="cstat-no" title="statement not covered" >                var subTag = self.tagIndex.index[subTagId];</span>
-<span class="cstat-no" title="statement not covered" >                if ( !subTag )<span class="cstat-no" title="statement not covered" >console.log( "Required tag not defined" );</span></span>
-                else <span class="cstat-no" title="statement not covered" >tag.addTag( subTag );</span>
-            } );
-        } );
-    };
+    self.tags.memory.forEach( <span class="fstat-no" title="function not covered" >function ( tag ) {</span>
+<span class="cstat-no" title="statement not covered" >      self.subTags.index[tag.id].forEach( <span class="fstat-no" title="function not covered" >function ( subTagId ) {</span></span>
+<span class="cstat-no" title="statement not covered" >        var subTag = self.tagIndex.index[subTagId];</span>
+<span class="cstat-no" title="statement not covered" >        if ( !subTag )<span class="cstat-no" title="statement not covered" >console.log( "Required tag not defined" );</span></span>
+        else <span class="cstat-no" title="statement not covered" >tag.addTag( subTag );</span>
+      } );
+    } );
+  };
 &nbsp;
-    return TagProcessor;
+  return TagProcessor;
 } );</pre></td></tr>
 </table></pre>
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 04 2015 16:39:00 GMT+0100 (CET)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Feb 04 2015 19:15:08 GMT+0100 (CET)</div>
 </div>
 
 <script src="../prettify.js"></script>

@@ -89,47 +89,47 @@
 
 <div class="container">
   <div class="row">
-    <textarea id="file-source" class="col-md-12">define([&#039;typo&#039;], function(typo){
-    /**
-     * An error collector for simple key:valued error messages.
-     * Error messages are stored using their id (-&gt; one message per id)
-     * and can be retrieved by id.
-     * @param {object} target -
-     * @constructor
-     */
-    function TErrorCollector(target){
-        var errors = {};
-        typo.mix(target, {
-            &#039;@types&#039;: {
-                require:[&quot;TLogger&quot;],
-                expose:&quot;TErrorCollector&quot;
-            },
-            hasErrors: function(){
-                return Object.keys(errors).length &gt; 0;
-            },
-            addError: function (id, message){
-                errors[id] = message;
-            },
-            clearError: function (id){
-                delete errors[id];
-            },
-            getError: function(id){
-                return errors[id];
-            },
-            get errors (){
-                return errors;
-            },
-            logErrors: function (){
-                for(var error in errors){
-                    this.log(error + errors[error]);
-                }
-            }
-        });
-        return target;
-    }
+    <textarea id="file-source" class="col-md-12">define( [&#039;typo&#039;], function ( typo ) {
+  /**
+   * An error collector for simple key:valued error messages.
+   * Error messages are stored using their id (-&gt; one message per id)
+   * and can be retrieved by id.
+   * @param {object} target -
+   * @constructor
+   */
+  function TErrorCollector ( target ) {
+    var errors = {};
+    typo.mix( target, {
+      &#039;@types&#039; : {
+        require : [&quot;TLogger&quot;],
+        expose : &quot;TErrorCollector&quot;
+      },
+      hasErrors : function () {
+        return Object.keys( errors ).length &gt; 0;
+      },
+      addError : function ( id, message ) {
+        errors[id] = message;
+      },
+      clearError : function ( id ) {
+        delete errors[id];
+      },
+      getError : function ( id ) {
+        return errors[id];
+      },
+      get errors () {
+        return errors;
+      },
+      logErrors : function () {
+        for ( var error in errors ) {
+          this.log( error + errors[error] );
+        }
+      }
+    } );
+    return target;
+  }
 
-    return TErrorCollector;
-});</textarea>
+  return TErrorCollector;
+} );</textarea>
   </div>
 </div>
 
