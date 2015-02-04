@@ -1,6 +1,6 @@
 var gulp = require( 'gulp' ),
-  project = require( './build.project' )
-paths = project.paths,
+  project = require( './build.project' ),
+  paths = project.paths,
   clean = require( 'gulp-clean' ),
   deploy = require( 'gulp-gh-pages' );
 
@@ -13,7 +13,7 @@ gulp.task( 'site:prepare', ['jsdoc', 'qa:plato', 'test:karma'], function ( done 
 
 gulp.task( 'site:clean', function () {
   return gulp.src( [ paths.site ], { read : false } )
-    .pipe( clean({force:true}) );
+    .pipe( clean( {force : true} ) );
 } );
 
 /**

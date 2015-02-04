@@ -1,5 +1,5 @@
 // use taffy db for internal representation of catalogue data
-var db = require("../../lib/taffy");
+var db = require( "../../lib/taffy" );
 
 /**
  * The catalogue module exposes objects that wrap the raw catalogue data to provide
@@ -8,7 +8,7 @@ var db = require("../../lib/taffy");
  * @module catalogues
  */
 var Catalogues = {
-    Symptoms:Symptoms
+  Symptoms : Symptoms
 };
 
 /**
@@ -17,35 +17,35 @@ var Catalogues = {
  * @param {object} data - The raw symptoms catalogue data as parsed from its json representation
  *
  */
-function Symptoms(data){
-    var _tags = db(data.tags);
-    var _symptoms = db(data.entries);
-    var self = this;
-    /**
-     * Find a set of symptoms by a given search criteria.
-     *
-     * @example <caption>Find matching exact value</caption>
-     * // returns 2
-     *
-     * @param criteria
-     * @returns {*}
-     */
-     this.find = function (criteria){
-        var matching = _tags(criteria); // filter tags by given criteria
-        var joined = matching.join(_symptoms, function(left, right){
-            return left.symptoms.indexOf(right.sid) != -1;
-        });
-        //var result = joined.select("sid", "cName");
-         var result = joined.map(function (record,recordnumber) {
-             return {sid: record.sid , cName : record.cName};
-         });
-        return result;
-    };
+function Symptoms ( data ) {
+  var _tags = db( data.tags );
+  var _symptoms = db( data.entries );
+  var self = this;
+  /**
+   * Find a set of symptoms by a given search criteria.
+   *
+   * @example <caption>Find matching exact value</caption>
+   * // returns 2
+   *
+   * @param criteria
+   * @returns {*}
+   */
+  this.find = function ( criteria ) {
+    var matching = _tags( criteria ); // filter tags by given criteria
+    var joined = matching.join( _symptoms, function ( left, right ) {
+      return left.symptoms.indexOf( right.sid ) != -1;
+    } );
+    //var result = joined.select("sid", "cName");
+    var result = joined.map( function ( record, recordnumber ) {
+      return {sid : record.sid, cName : record.cName};
+    } );
+    return result;
+  };
 
-    // this is the publicly exposed object
-    return {
-       find: self.find
-    };
+  // this is the publicly exposed object
+  return {
+    find : self.find
+  };
 }
 
 // export such that require(file).catalogue works

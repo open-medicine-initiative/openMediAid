@@ -1,8 +1,8 @@
-Medium - Social Healthshare
+OpenMed - Social Healthshare
 ======
-> Medium is a [crowd-sourced](Crowdsourcing), non-profit, open medicine platform aiming to guide patients and doctors in their search for case-specific medical information in order to speed up the process of finding appropriate diagnoses and effective treatments.  
+> OpenMed is a [crowd-sourced](Crowdsourcing), non-profit, open medicine platform aiming to guide patients and doctors in their search for case-specific medical information.  
 
-This page provides information mainly for developers. If you don't know what the [goal](https://github.com/mediumorg/medium/wiki/How-it-works) of this project is, [how it works](https://github.com/mediumorg/medium/wiki/How-it-works) and how to contribute please be referred to the [wiki](https://github.com/mediumorg/medium/wiki)
+This page provides information mainly for developers. For more information about the project itself please visit [wiki](https://github.com/mediumorg/medium/wiki)
 
 
 # Development
