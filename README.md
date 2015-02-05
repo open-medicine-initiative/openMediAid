@@ -11,7 +11,7 @@ This page provides information mainly for developers. For more information about
 ## Setup
 
 * Prerequisites: Installation of basic software packages
-  *  Install node.js and npm
+  *  Install git, node.js and npm
   *  Ensure that `node` points to `nodejs` for compatibility of some plugins (set a symlink)
   *  Install gulp and bower globally: `sudo npm install -g gulp bower`
   *  Install karma client globally for convenience `sudo npm install -g karma-cli`
