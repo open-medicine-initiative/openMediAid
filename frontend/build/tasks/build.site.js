@@ -25,7 +25,9 @@ gulp.task( 'site:assemble', function () {
     .pipe( gulp.dest( paths.site ) );
 } );
 
-
+/**
+ * Deploy generated site to github pages
+ */
 gulp.task( 'site:deploy', function () {
   return gulp.src( paths.site + '**/*' )
     .pipe( deploy( {remoteUrl : "https://github.com/open-medicine-initiative/OpenMed"} ) )

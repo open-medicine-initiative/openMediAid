@@ -1,10 +1,10 @@
 {
-  "name": "medium",
-  "description": "Main package of medium medical platform",
+  "name": "OpenMed",
+  "description": "Main package of OpenMed medical platform",
   "author": "Benjamin Diedrichsen <b.diedrichsen@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "http://github.com/mediumorg/medium.git"
+    "url": "http://github.com/open-medicine-initiative/OpenMed.git"
   },
   "dependencies": {
     "taffydb": ">=2.7.2",

@@ -1,8 +1,8 @@
 OpenMed - Social Healthshare
 ======
-> OpenMed is a [crowd-sourced](Crowdsourcing), non-profit, open medicine platform aiming to guide patients and doctors in their search for case-specific medical information.  
+> OpenMed is a crowd-sourced, non-profit, open medicine platform aiming to guide patients and doctors in their search for case-specific medical information.  
 
-This page provides information mainly for developers. For more information about the project itself please visit [wiki](https://github.com/mediumorg/medium/wiki)
+This page provides information mainly for developers. For more information about the project please visit [OpenMed](http://www.open-med.net)
 
 
 # Development
@@ -10,15 +10,17 @@ This page provides information mainly for developers. For more information about
 
 ## Setup
 
-* Install node.js and npm
-* Checkout repository: `git clone https://github.com/mediumorg/medium`
-* Change to the root directory where the code resides: `cd code`
-* Ensure that `node` points to `nodejs` for compatibility of some plugins (set a symlink)
-* Install gulp and bower globally: `npm install -g gulp bower`
-* Install npm dependencies: `npm install`
-* Install bower dependencies: `bower install`
-* Install karma client globally for convenience `sudo npm install -g karma-cli`
-* Run default build `gulp`
+* Prerequisites: Installation of basic software packages
+  *  Install node.js and npm
+  *  Ensure that `node` points to `nodejs` for compatibility of some plugins (set a symlink)
+  *  Install gulp and bower globally: `sudo npm install -g gulp bower`
+  *  Install karma client globally for convenience `sudo npm install -g karma-cli`
+* Setting up the OpenMed project  
+  *  Clone the OpenMed repository: `git clone https://github.com/open-medicine-initiative/OpenMed`
+  *  Change to the root directory of the frontend code: `cd frontend`
+  *  Install projects npm dependencies: `npm install`
+  *  Install projects bower dependencies: `bower install`
+  *  Run default build `gulp`
 
 [WIP]
 
@@ -60,4 +62,4 @@ Examples `fix(doc): corrected typo in ...` `feature(build): added lint validatio
 
 ### License
  
- Something like MIT but has yet to be decided
+Something like MIT but has yet to be decided
