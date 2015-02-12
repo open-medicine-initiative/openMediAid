@@ -1,8 +1,0 @@
-{
-  "name": "test-medium",
-  "version": "0.0.0",
-  "private": true,
-  "dependencies": {
-    "requirejs": "~2.1.11"
-  }
-}
