@@ -1,8 +1,8 @@
-OpenMed - Social Healthshare
+openMediAid - Social Healthshare
 ======
-> OpenMed is a crowd-sourced, non-profit, open medicine platform aiming to guide patients and doctors in their search for case-specific medical information.  
+> openMediAid is a crowd-sourced, non-profit, open medicine platform aiming to guide patients and doctors in their search for case-specific medical information.  
 
-This page provides information mainly for developers. For more information about the project please visit [OpenMed](http://www.open-med.net)
+This page provides information mainly for developers. For more information about the project please visit [openMediAid](http://www.openmediaid.org)
 
 
 # Development
