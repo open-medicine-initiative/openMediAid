@@ -40,7 +40,7 @@ requireJsOptimizerConfig = merge( requireJsRuntimeConfig, {
   insertRequire : ['app/startup'],
   bundles : {
     'widgets': ['components/userlist/userlist', 'text!components/recently-added/recently-added.html'],
-    'editor': ['components/jsoneditor/jsoneditor']
+    'editor': ['components/jsoneditor/jsoneditor', 'text!pages/editor.html', ]
     // If you want parts of the site to load on demand, remove them from the 'include' list
     // above, and group them into bundles here.
     // 'bundle-name': [ 'some/module', 'another/module' ],

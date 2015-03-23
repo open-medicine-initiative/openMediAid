@@ -25,7 +25,7 @@ var require = {
     "mbassy" : "modules/mbassy",
     "utils" : "modules/common/utils",
     "assembly" : "modules/stages",
-    "editor.Node" : "components/jsoneditor/json.editor.Node",
+    "editor.Node" : "components/jsoneditor/jsonnode",
     "fastclick" : "plugins/fastclick/fastclick",
     "sparkline" : "plugins/sparkline/jquery.sparkline.min",
     "jvectormap" : "plugins/jvectormap/jquery-jvectormap-1.2.2.min",
