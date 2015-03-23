@@ -19,6 +19,13 @@ define( [
     };
   }
 
+  TagProcessor.prototype.buildTagHierarchy = function (tagdefs) {
+    var processed =  pipeline().consumeAll(tagdefs);
+    this.buildHierarchy();
+    return processed;
+  };
+
+
   TagProcessor.prototype.pipeline = function () {
     var _pipe = new Pipeline()
       .stage( this.stages.SubTagIndexer )
@@ -76,7 +83,6 @@ define( [
    */
   TagProcessor.prototype.buildHierarchy = function () {
     var self = this;
-
     self.tags.memory.forEach( function ( tag ) {
       self.subTags.index[tag.id].forEach( function ( subTagId ) {
         var subTag = self.tagIndex.index[subTagId];

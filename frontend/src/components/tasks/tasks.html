@@ -1,0 +1,27 @@
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <i class="fa fa-flag-o"></i>
+    <span class="label label-danger" data-bind="text: tasks().length"></span>
+</a>
+<ul class="dropdown-menu">
+    <li class="header" data-bind="text: notification()"></li>
+    <li>
+        <!-- inner menu: contains the actual data -->
+        <ul class="menu" data-bind="foreach : tasks">
+            <li><!-- Task item -->
+                <a href="#">
+                    <h3 data-bind="text:subject">
+                        <small class="pull-right" data-bind="text: completion() + '%'"></small>
+                    </h3>
+                    <div class="progress xs">
+                        <div data-bind="style : {width: completion() + '%'}" class="progress-bar progress-bar-aqua" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                            <span class="sr-only" data-bind="text: completion() + '% complete'"></span>
+                        </div>
+                    </div>
+                </a>
+            </li><!-- end task item -->
+        </ul>
+    </li>
+    <li class="footer">
+        <a href="#">View all tasks</a>
+    </li>
+</ul>

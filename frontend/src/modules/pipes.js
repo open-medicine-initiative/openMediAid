@@ -3,11 +3,11 @@ define( ['lodash'], function ( _ ) {
   /**
    * @name Pipeline
    * @constructor
-   * @class Pipelines can be used to process elements (data/objects/functions) through a chain of multiple
-   * processing steps, called stages.
+   * @class Pipelines can be used to process elements (data/objects/functions) through a
+   * chain of multiple processing steps, called stages.
    *
-   * Each stage is a function that processes a single element at a time. A stage may either modify the given
-   * input or construct and return new data to be passed through the rest of the pipeline.
+   * Each stage is a function that processes a single element at a time. A stage may either
+   * modify the given input or construct and return new data to be passed through the rest of the pipeline.
    *
    * @returns {} A new pipeline
    *

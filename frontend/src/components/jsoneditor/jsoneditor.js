@@ -23,9 +23,7 @@ define( [
 
     function parse ( nodes ) {
         var nodesById = new assembly.Indexer(),
-            childsByParentId = new assembly.Indexer( {target : function ( node ) {
-                return node.items;
-            }} ),
+            childsByParentId = new assembly.Indexer( { target: function(node){ return node.items }}),
             nodeAssembly = new Pipeline()
                 .stage( childsByParentId.asStage() )
                 .stage( function ( src ) { return new Node( src );} )

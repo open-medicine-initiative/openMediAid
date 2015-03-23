@@ -12,10 +12,10 @@ gulp.task( 'prepare', ["clean"], function ( callback ) {
 gulp.task( 'clean', function () {
   return gulp.src( [
       paths.dist,
-      paths.jsdoc,
-      paths.reports],
+      paths.gen,
+      paths.site],
     { read : false } )
-    .pipe( clean() );
+    .pipe( clean({force:true}) );
 } );
 
 

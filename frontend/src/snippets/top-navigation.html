@@ -1,0 +1,37 @@
+<!-- Header Navbar: style can be found in header.less -->
+<nav class="navbar navbar-static-top" role="navigation">
+    <!-- Sidebar toggle button-->
+
+    <script id="menu-toggle" type="text/html">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+        </a>
+    </script>
+    <!-- ko template: { name: 'menu-toggle' } --><!-- /ko -->
+
+    <!-- Navbar Right Menu -->
+    <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+            <!-- Messages: style can be found in dropdown.less-->
+            <li class="dropdown messages-menu">
+                <!-- ko component: "messagebox" -->
+                <!-- /ko -->
+            </li>
+            <!-- Notifications: style can be found in dropdown.less -->
+            <li class="dropdown notifications-menu">
+                <!-- ko component: "notifications" -->
+                <!-- /ko -->
+            </li>
+            <!-- Tasks: style can be found in dropdown.less -->
+            <li class="dropdown tasks-menu">
+                <!-- ko component: "tasks" -->
+                <!-- /ko -->
+            </li>
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+                <!-- ko component: "usermenu" -->
+                <!-- /ko -->
+            </li>
+        </ul>
+    </div>
+</nav>

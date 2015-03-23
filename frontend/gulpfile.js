@@ -1,4 +1,3 @@
-
 /**
  * This is the root build file that assembles all tasks and provides help about build usage.
  *
@@ -7,111 +6,57 @@
  */
 
 // Gulp and plugins
-var gulp = require('gulp'),
-    requirejs = require('gulp-requirejs-bundler'),
-    concat = require('gulp-concat'),
-    clean = require('gulp-clean'),
-    replace = require('gulp-replace'),
-    uglify = require('gulp-uglify'),
-    htmlreplace = require('gulp-html-replace'),
-    //gulpLiveScript = require('gulp-livescript'),
-    watch = require('gulp-watch');
+var gulp = require( 'gulp' ),
+  webserver = require( 'gulp-webserver' ),
+  watch = require( 'gulp-watch' ),
+  chalk = require( 'chalk' );
 
 // Include build tasks
-var paths = require('./build/tasks/build.project').paths,
-    common = require('./build/tasks/build.common'),
-    testing = require('./build/tasks/build.testing'),
-    documentation = require('./build/tasks/build.documentation' ),
-    libs = require('./build/tasks/build.dependencies' ),
-    site = require('./build/tasks/build.site' ),
-    qa = require('./build/tasks/build.qa' );
-
-// Node modules
-var fs = require('fs'),
-    vm = require('vm'),
-    merge = require('deeply'),
-    chalk = require('chalk'),
-    es = require('event-stream');
+var paths = require( './build/tasks/build.project' ).paths,
+  common = require( './build/tasks/build.common' ),
+  testing = require( './build/tasks/build.testing' ),
+  documentation = require( './build/tasks/build.documentation' ),
+  libs = require( './build/tasks/build.dependencies' ),
+  site = require( './build/tasks/build.site' ),
+  less = require( './build/tasks/build.less' ),
+  dist = require( './build/tasks/build.dist' ),
+  qa = require( './build/tasks/build.qa' );
 
 
+gulp.task( 'default', ['build:dev'], function ( done ) {
+  done();
+} );
 
-// Config
-var requireJsRuntimeConfig = vm.runInNewContext(fs.readFileSync('src/app/require.config.js') + '; require;');
-    requireJsOptimizerConfig = merge(requireJsRuntimeConfig, {
-        out: 'scripts.js',
-        baseUrl: './src',
-        name: 'app/startup',
-        paths: {
-            requireLib: 'lib/requirejs/require'
-        },
-        // Modules listed here will be loaded synchronously by the app at startup
-        // --> available immediately
-        include: [
-            'requireLib',
-            'components/nav-bar/nav-bar',
-            'components/home-page/home',
-            'text!components/about-page/about.html'
-        ],
-        insertRequire: ['app/startup'],
-        bundles: {
-            // If you want parts of the site to load on demand, remove them from the 'include' list
-            // above, and group them into bundles here.
-            // 'bundle-name': [ 'some/module', 'another/module' ],
-            // 'another-bundle-name': [ 'yet-another-module' ]
-        }
-    });
+gulp.task( 'build:prod', ['dist', 'qa:lint'], function ( callback ) {
+  callback();
+  console.log( '\nPlaced optimized files in ' + chalk.magenta( paths.dist + '\n' ) );
+} );
 
-// Discovers all AMD dependencies, concatenates all required .js files, minifies them
-gulp.task('js', function () {
-    return requirejs(requireJsOptimizerConfig)
-        .pipe(uglify({ preserveComments: 'some' }))
-        .pipe(gulp.dest(paths.dist));
-});
+gulp.task( 'build:dev', ['dist'], function ( callback ) {
+  callback();
+  console.log( '\nPlaced optimized files in ' + chalk.magenta( paths.dist + '\n' ) );
+} );
 
-// Concatenates CSS files, rewrites relative paths to Bootstrap fonts, copies Bootstrap fonts
-gulp.task('css', function () {
-    var theme = 'lumen'; // TODO: make this configurable
+gulp.task( 'server', function () {
+  return gulp.src( '../target/frontend/dist' )
+    .pipe( webserver( {
+      livereload : true
+    } ) )
+} );
 
-    var bootstrapCss = gulp.src('src/lib/components-bootstrap/css/bootstrap.min.css')
-            .pipe(replace(/url\((')?\.\.\/fonts\//g, 'url($1fonts/')),
-        appCss = gulp.src('src/css/*.css'),
-        combinedCss = es.concat(bootstrapCss, appCss).pipe(concat('css.css')),
-        fontFiles = gulp.src('./src/lib/components-bootstrap/fonts/*', { base: './src/lib/components-bootstrap/' });
-    return es.concat(combinedCss, fontFiles)
-        .pipe(gulp.dest(paths.dist));
-});
+gulp.task( 'help', function () {
+  // TODO: explain options and build
+  console.log( "This is the medium build script!" )
+} );
 
-
-// Copies index.html, replacing <script> and <link> tags to reference production URLs
-gulp.task('html', function() {
-    return gulp.src('./src/index.html')
-        .pipe(htmlreplace({
-            'css': 'css.css',
-            'js': 'scripts.js'
-        }))
-        .pipe(gulp.dest(paths.dist));
-});
-
-
-gulp.task('default', ['build-app-dev'], function(done) {
-    done();
-});
-
-gulp.task('build-app-prod', ['html', 'js', 'css', 'qa:lint'], function(callback) {
-    callback();
-    console.log('\nPlaced optimized files in ' + chalk.magenta(paths.dist + '\n'));
-});
-
-gulp.task('build-app-dev', ['html', 'js', 'css'], function(callback) {
-    callback();
-    console.log('\nPlaced optimized files in ' + chalk.magenta(paths.dist + '\n'));
-});
-
-
-gulp.task('help', function () {
-    // TODO: explain options and build
-    console.log("This is the medium build script!")
-});
+// Watchers
+// -------------------------------------------------
+gulp.task( 'devmode', ['server'], function () {
+  gulp.watch( [
+    'src/components/**/*.js',
+    'src/snippets/**/*.html'
+  ], ['build:dev'] );
+} );
 
 //https://github.com/rschmukler/gulp-insert
 

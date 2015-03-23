@@ -1,36 +1,55 @@
-define( [
-  'jquery',
+
+define(['jquery',
   'knockout',
   './router',
+  'knockout-punches',
   'bootstrap',
-  'knockout-projections'
-], function ( $, ko, router ) {
+  'knockout-projections',
+  'adminLTE'] , function ( $, ko, router ) {
   var root = (typeof window === "object" && window) || this;
-  root.ko = ko;
-  $( document ).ready( function () {
-    // Components can be packaged as AMD modules, such as the following:
+  root.ko = ko; // expose knockout globally
+
+  // Syntactic sugar for template-only component registration
+  var template = function(path){
+    return {template : { require : path }};
+  };
+
+  // All component registration is defined here
+  // This function is called after the dom is ready
+  var registerComponents = function(){
+    // Components packaged as AMD modules:
     ko.components.register( 'nav-bar', { require : 'components/nav-bar/nav-bar' } );
     ko.components.register( 'home-page', { require : 'components/home-page/home' } );
+    ko.components.register( 'messagebox', { require : 'components/messagebox/messagebox' } );
+    ko.components.register( 'notifications', { require : 'components/notifications/notifications' } );
+    ko.components.register( 'tasks', { require : 'components/tasks/tasks' } );
+    ko.components.register( 'usermenu', { require : 'components/usermenu/usermenu' } );
+    ko.components.register( 'sidebar', { require : 'components/sidebar/sidebar' } );
 
+    // ... Template-only components ( just pointing to a .html file ):
+    ko.components.register( 'disclaimer', template('text!snippets/disclaimer.html'));
+    ko.components.register( 'top-navigation', template('text!snippets/top-navigation.html'));
+    ko.components.register( 'userlist', template('text!components/userlist/userlist.html'));
+    ko.components.register( 'chatbox', template('text!components/chatbox/chatbox.html'));
+    ko.components.register( 'recently-added', template('text!components/recently-added/recently-added.html'));
 
-    // ... or for template-only components, you can just point to a .html file directly:
-    ko.components.register( 'about-page', {
-      template : { require : 'text!components/about-page/about.html' }
-    } );
-
-//    ko.components.register('tags', { require: 'components/tags/taghierarchy' });
-//    ko.components.register('tag', {
-//        template: {require: "text!components/tags/tag.html"}
-//    });
+    // pages
+    ko.components.register( 'home', template('text!pages/home.html'));
+    ko.components.register( 'editor', template('text!pages/editor.html'));
 
     ko.components.register( 'jsoneditor', { require : 'components/jsoneditor/jsoneditor' } );
-    ko.components.register( 'node', {
-      template : {require : "text!components/jsoneditor/jsoneditor.html"}
-    } );
+    ko.components.register( 'node', template("text!components/jsoneditor/jsoneditor.html"));
+  };
 
+
+
+  $( document ).ready( function () {
+    // add components to knockout
+    registerComponents();
+    // activate the syntax extensions made by punches
+    ko.punches.enableAll();
     // Start the application
     ko.applyBindings( { route : router.currentRoute } );
   } );
-
 
 } );

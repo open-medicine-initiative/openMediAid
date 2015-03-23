@@ -1,4 +1,8 @@
-## The build process
+## The build
+
+  * build.project.js: Project variables and path configurations
+  * build.common.js: 
+  * build.less.js: Compilation of less to css
 
 [WIP]
 

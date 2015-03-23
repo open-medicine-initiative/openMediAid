@@ -1,41 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>test-scaffold</title>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>OPENMEDiAID</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <!-- Bootstrap 3.3.2 -->
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"
+          type="text/css"/>
+    <!-- Ionicons -->
+    <link href="http://code.ionicframework.com/ionicons/2.0.0/css/ionicons.min.css" rel="stylesheet" type="text/css"/>
+    <!-- Morris chart -->
+    <link href="plugins/morris/morris.css" rel="stylesheet" type="text/css"/>
+    <!-- jvectormap -->
+    <link href="plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css"/>
+    <!-- Daterange picker -->
+    <link href="plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css"/>
+
+    <!-- Next sections are targeted by  htmlreplace plugin -->
+
     <!-- build:css -->
-      <link href="lib/components-bootstrap/css/bootstrap.min.css" rel="stylesheet">
-      <link href="css/styles.css" rel="stylesheet">
+    <link href="resources/css/main.css" rel="stylesheet" type="text/css"/>
+    <link href="resources/css/skin-blue.css" rel="stylesheet" type="text/css"/>
     <!-- endbuild -->
+
     <!-- build:js -->
-      <script src="app/require.config.js"></script>
-      <script data-main="app/startup" src="lib/requirejs/require.js"></script>
-      <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="app/require.config.js"></script>
+    <script data-main="app/startup" src="lib/requirejs/require.js"></script>
     <!-- endbuild -->
 
-  </head>
-  <body>
-  <nav-bar params="route: route"></nav-bar>
-  <div class="container voffset5">
-      <div class="row">
-          <div class="col-md-12"></div>
-      </div>
-      <div class="row">
-          <div class="col-md-4">Search bar goes heredfdsffdsadfffffff
-          fdsfadf
-          fdsfas
-          dfds</div>
-          <div class="col-md-8">submenue might go here</div>
-      </div>
-      <div class="row">
-          <div class="col-md-4">tree</div>
-          <div class="col-md-8"><div id="page" class="container" data-bind="component: { name: route().page, params: route }" /></div>
-      </div>
-      <div class="row">
-          <div class="col-md-12">Footer</div>
-      </div>
-  </div>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="skin-blue">
+<div class="wrapper">
 
-  </body>
+    <header class="main-header">
+
+        <!-- Logo -->
+        <a href="#" class="logo"><b>OPENMEDiAID</b></a>
+
+        <!-- ko component: "top-navigation" -->
+        <!-- /ko -->
+
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar" data-bind="component: { name: 'sidebar', params: { route: route} }"></aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                Dashboard
+                <small>Version 2.0</small>
+            </h1>
+            <ol class="breadcrumb">
+                <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+                <li class="active">Dashboard</li>
+            </ol>
+        </section>
+
+        <!-- Main content is bound according to current route-->
+        <section class="content" data-bind="component: { name: route().page, params: route }"></section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <disclaimer></disclaimer>
+
+</div>
+<!-- ./wrapper -->
+
+</body>
 </html>

@@ -1,0 +1,1 @@
+[Knockout components](http://knockoutjs.com/documentation/component-overview.html) are combinations of markup and JavaScript models.

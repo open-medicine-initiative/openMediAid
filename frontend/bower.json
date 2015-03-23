@@ -1,12 +1,12 @@
 {
-  "name" : "OpenMed",
+  "name" : "OPENMEDiAID",
   "version" : "0.0.1",
   "private" : true,
   "dependencies" : {
     "knockout-dict" : "git://github.com/jamesfoster/knockout.observableDictionary.git",
     "knockout-projections" : "~1.1.0",
     "knockout" : "~3.2.0",
-    "components-bootstrap" : "~3.1.1",
+    "bootstrap" : "3.3.2",
     "crossroads" : "~0.12.0",
     "hasher" : "~1.2.0",
     "requirejs" : "~2.1.11",
